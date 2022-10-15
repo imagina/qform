@@ -57,6 +57,12 @@ export default {
               color: 'info',
               route: 'qform.admin.fields.index',
               label: this.$trp('isite.cms.label.field')
+            },
+            {
+              icon: "fas fa-copy",
+              action: (item) => this.$helper.copyToClipboard(item.embed, 'isite.cms.messages.copyToClipboard'),
+              color: 'info',
+              label: this.$trp('isite.cms.label.copyEmbedHtml'),
             }
           ]
         },

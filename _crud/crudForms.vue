@@ -28,8 +28,13 @@ export default {
               format: val => (val && val.fullName) ? val.fullName : '-'
             },
             {
-              name: 'destinationEmail', label: this.$trp('isite.cms.label.email'), field: 'destinationEmail', align: 'left',
-              classes: 'ellipsis', style: 'max-width : 250px', format: val => val ? val.join(', ') : '-'
+              name: 'destinationEmail',
+              label: this.$trp('isite.cms.label.email'),
+              field: 'destinationEmail',
+              align: 'left',
+              classes: 'ellipsis',
+              style: 'max-width : 250px',
+              format: val => val ? val.join(', ') : '-'
             },
 
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
@@ -59,7 +64,7 @@ export default {
               label: this.$trp('isite.cms.label.field')
             },
             {
-              icon: "fas fa-copy",
+              icon: "fa-light fa-file-code",
               action: (item) => this.$helper.copyToClipboard(item.embed, 'isite.cms.messages.copyToClipboard'),
               color: 'info',
               label: this.$trp('isite.cms.label.copyEmbedHtml'),

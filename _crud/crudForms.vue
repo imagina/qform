@@ -167,6 +167,20 @@ export default {
               requestParams: {filter: {formId: this.crudInfo.id}},
               select: {label: 'name', id: 'id'}
             }
+          },
+          replyToName: {
+            value: null,
+            type: 'select',
+            isFakeField: true,
+            props: {
+              vIf: this.crudInfo.typeForm == 'update',
+              label: this.$tr('iforms.cms.replyTo')
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qform.fields',
+              requestParams: {filter: {formId: this.crudInfo.id}},
+              select: {label: 'name', id: 'id'}
+            }
           }
         },
         getDataForm: (data, typeForm) => {

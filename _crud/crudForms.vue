@@ -174,7 +174,7 @@ export default {
             isFakeField: true,
             props: {
               vIf: this.crudInfo.typeForm == 'update',
-              label: this.$tr('iforms.cms.replyTo')
+              label: this.$tr('iforms.cms.replyToName')
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',

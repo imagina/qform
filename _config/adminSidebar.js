@@ -4,7 +4,7 @@ const pages = config('pages') // Get Pages from config
 export default [
   {
     title: 'iforms.cms.sidebar.adminGroup',
-    icon: 'fas fa-clipboard-list',
+    icon: 'fa-light fa-clipboard-list-check',
     children: [
       pages.qform.forms,
       pages.qform.leads,

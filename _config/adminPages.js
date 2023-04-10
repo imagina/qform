@@ -8,7 +8,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iforms.cms.sidebar.adminForm',
-    icon: 'fab fa-wpforms',
+    icon: 'fa-light fa-clipboard-list-check',
     authenticated: true,
     subHeader: {
       refresh: true
@@ -22,7 +22,7 @@ export default {
     page: () => import('@imagina/qform/_pages/admin/forms/design'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iforms.cms.sidebar.designForm',
-    icon: 'fab fa-wpforms',
+    icon: 'fa-light fa-clipboard-list-check',
     authenticated: true
   },
   fields: {
@@ -77,7 +77,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iforms.cms.sidebar.adminLead',
-    icon: 'fas fa-leaf',
+    icon: 'fa-light fa-clipboard-check',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -92,7 +92,7 @@ export default {
     page: () => import('@imagina/qform/_pages/admin/leads/show'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iforms.cms.sidebar.adminLead',
-    icon: 'fas fa-chalkboard-teacher',
+    icon: 'fa-light fa-clipboard-check',
     authenticated: true
   },
 }

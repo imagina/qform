@@ -283,7 +283,11 @@ export default {
         this.$crud.show('apiRoutes.qform.forms', this.$route.params.id, requestParams).then(response => {
           this.formData = response.data
           this.loading = false
-        }).catch(error => this.loading = false)
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            this.loading = false
+          })
+        })
       })
     },
 

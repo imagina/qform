@@ -77,8 +77,10 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-            this.loading = false
+            this.$apiResponse.handleError(error, () => {
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+              this.loading = false
+            })
           })
       },
       getFields(){
@@ -99,8 +101,10 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-            this.loading = false
+              this.$apiResponse.handleError(error, () => {
+                this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+                this.loading = false
+              })
           })
       },
       updateOrderInField(data, newOrder){

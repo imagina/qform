@@ -47,8 +47,10 @@
           this.countries.loading = false
         })
         .catch( error => {
-          this.countries.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            this.$apiResponse.handleError(error, () => {
+              this.countries.loading = false
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            })
         })
       },
       getProvinces(countryId) {

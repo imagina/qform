@@ -69,8 +69,10 @@ export default {
           this.loading = false
         })
         .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$apiResponse.handleError(error, () => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          })
         })
     },
     getFields() {
@@ -89,8 +91,10 @@ export default {
           this.table.columns = this.orderColumnsForTable(response.data)
         })
         .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$apiResponse.handleError(error, () => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          })
         })
     },
     orderColumnsForTable(array) {
@@ -120,9 +124,11 @@ export default {
           this.loading = false
         })
         .catch(error => {
-          this.loading = false
-          console.error(error)
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$apiResponse.handleError(error, () => {
+            this.loading = false
+            console.error(error)
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          })
         })
     },
     orderDataForTable(array) {

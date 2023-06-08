@@ -45,16 +45,6 @@ export default {
           id: {value: ''},
           formId: {value: this.$route.params.id},
           blockId: {value: this.$route.params.blockId},
-          name: {
-            value: '',
-            type: 'input',
-            props: {
-              label: `${this.$tr('isite.cms.form.name')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            }
-          },
           label: {
             value: '',
             type: 'input',

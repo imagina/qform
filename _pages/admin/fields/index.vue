@@ -5,7 +5,7 @@
           ref="crudBlocks" @updated="getData(true)" @deleted="getData(true)" @created="getData(true)"/>
     <!--Fields Crud-->
     <crud :crud-data="import('@imagina/qform/_crud/fields')" :custom-data="customCrudFields" type="no-index"
-          ref="crudFields" @deleted="getData(true)" @created="getData(true)"/>
+          ref="crudFields" @updated="getData(true)" @deleted="getData(true)" @created="getData(true)"/>
 
     <!--page Content-->
     <div id="formfieldsPageContent" class="row q-col-gutter-md relative-position">
@@ -14,7 +14,7 @@
         <!--Page Actions-->
         <div class="box box-auto-height">
           <page-actions :title="`${$tr('isite.cms.label.form')}: ${formData.title}`" :extra-actions="['new']"
-                        @new="$refs.crudBlocks.create()"/>
+                        @new="$refs.crudBlocks.create()" @refresh="getData(true)"/>
         </div>
       </div>
       <!--Blocks content (draggable)-->
@@ -67,8 +67,8 @@
                   <!--Title-->
                   <div class="box-title">{{ $trp('isite.cms.label.field') }}</div>
                   <!--Btn to create field-->
-                  <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fas fa-plus"
-                         color="green" padding="sm" size="10px" round unelevated>
+                  <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fa-light fa-plus"
+                         color="primary" padding="sm" size="10px" rounded unelevated outline>
                     <q-tooltip>{{ $tr('iforms.cms.newField') }}</q-tooltip>
                   </q-btn>
                 </div>
@@ -76,9 +76,9 @@
                   <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
                                  style="height: 200px">
                     <!--Fields content (draggable)-->
-                    <draggable @update="updateOrderField" @change="updateOrderField" :list="formData.fields"
+                    <draggable @update="updateOrderField" @change="updateOrderField" :list="block.fields"
                                group="bocksfields"
-                               v-bind="dragOptions" v-model="block.fields" class="list-group block"
+                               v-bind="dragOptions" class="list-group block"
                                style="min-height: 199px; width: 100%">
                       <div v-for="(field, fieldkey) in block.fields" :key="field.id"
                            class="items-center cursor-pointer">
@@ -86,7 +86,7 @@
                         <div class="row justify-between items-center relative-position q-py-xs">
                           <!--Field title-->
                           <div class="ellipsis text-grey-9 q-mr-xl">
-                            <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
+                            <q-icon name="fa-light fa-arrows-up-down-left-right" class="q-mr-xs"/>
                             {{ field.label }}
                           </div>
                           <!--Field Actions-->
@@ -134,9 +134,6 @@ import formForm from '@imagina/qform/_components/admin/forms/form'
 import draggable from 'vuedraggable'
 
 export default {
-  beforeDestroy() {
-    this.$root.$off('page.data.refresh')
-  },
   props: {},
   components: {
     draggable,
@@ -265,8 +262,6 @@ export default {
     init() {
       //Get form data
       this.getData(true)
-      //Listen refresh page
-      this.$root.$on('page.data.refresh', () => this.getData(true))
     },
     //Get form data
     getData(refresh = false) {

@@ -134,7 +134,12 @@ import formForm from '@imagina/qform/_components/admin/forms/form'
 import draggable from 'vuedraggable'
 
 export default {
-  props: {},
+  props: {
+      formId: {
+        type: Number,
+        default: null
+      },
+  },
   components: {
     draggable,
     renderForm,
@@ -178,6 +183,9 @@ export default {
     }
   },
   computed: {
+    getFormId() {
+        return this.$route.params.id || this.formId 
+    },
     //Custom Crud blocks
     customCrudBlocks() {
       return {
@@ -275,7 +283,7 @@ export default {
           }
         }
         //Request
-        this.$crud.show('apiRoutes.qform.forms', this.$route.params.id, requestParams).then(response => {
+        this.$crud.show('apiRoutes.qform.forms', this.getFormId, requestParams).then(response => {
           this.formData = response.data
           this.loading = false
         }).catch(error => {

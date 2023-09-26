@@ -48,8 +48,6 @@
 <script>
 
   export default {
-    components: {
-    },
     watch: {
       $route(to, from) {
         this.initForm()

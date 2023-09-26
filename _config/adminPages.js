@@ -40,6 +40,20 @@ export default {
       breadcrumb: ['qform.forms']
     }
   },
+  inheritFields: {
+    permission: null,
+    activated: true,
+    path: '/form/fields/inherit/:formId',
+    name: 'qform.admin.fields.inherit',
+    page: () => import('@imagina/qform/_pages/admin/inheritFields/Index.vue'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'iforms.cms.newField',
+    icon: 'fas fa-grip-horizontal',
+    authenticated: true,
+    subHeader: {
+      refresh: true
+    }
+  },
   fieldsCreate: {
     permission: null,
     activated: true,

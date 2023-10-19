@@ -21,13 +21,11 @@
             <div class="q-mt-lg">
               <dynamic-form
                 v-if="getFormId"
-                v-bind="formData"
                 formType="grid"
                 :formId="getFormId"
                 :send-to="{apiRoute: 'apiRoutes.qform.leads', extraData: { formId : getFormId}}"
                 withFeedBack
                 @obtainedForm="onObtainedForm"
-                @newForm="reset"
               />
             </div>
           </div>
@@ -58,22 +56,17 @@ export default {
     return {
       loading: false,
       title: false,
-      formData: false
     }
   },
   computed: {
     getFormId() {
-        return this.$route.params.id
+      return this.$route.params.id || this.formId
     }
   },
   methods: {
     init() {},
-    reset() {
-      this.formData = false;
-    },
     onObtainedForm(data){
-      this.formData = data
-      this.title = this.formData.title
+      this.title = data.title
     }
   }
 }

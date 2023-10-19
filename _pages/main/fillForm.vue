@@ -57,13 +57,12 @@ export default {
     return {
       loading: false,
       title: false,
-      formData: false,
-      form: {}
+      formData: false
     }
   },
   computed: {
     getFormId() {
-        return this.$route.params.id || this.formId 
+        return this.$route.params.id
     }
   },
   methods: {

@@ -8,8 +8,12 @@ export default {
     name: 'qform.main.leads.create',
     page: () => import('@imagina/qform/_pages/main/fillForm'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'iforms.cms.sidebar.adminField',
+    title: 'iforms.cms.fillForm',
     icon: 'fas fa-grip-horizontal',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb: ['qform.forms']
+    }
   }
 }

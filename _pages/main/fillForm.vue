@@ -9,12 +9,23 @@
             col-sm-12
             col-md-10
             col-lg-8
-            col-xl-6
+            col-xl-8
           ">
             <!--Form title-->
-            <div class="box box-auto-height" v-if="title">
+            <div class="box box-auto-height">
               <div class="row text-primary text-weight-bold ellipsis title-content items-center">
-                <label id="formFillPageTitle">{{$tr('isite.cms.label.form')}} : {{ title }}</label>
+                <div class="col-11">
+                  <label id="formFillPageTitle">{{$tr('isite.cms.label.form')}} : {{ title }}</label>
+                </div>
+                <div class="col-1">
+                  <q-btn
+                    icon="fa-light fa-clipboard-list-check"
+                    @click="copyUrl"
+                    unelevated
+                    rounded
+                    no-caps
+                  />
+                </div>
               </div>
             </div>
             <!--Form info-->
@@ -55,7 +66,7 @@ export default {
   data() {
     return {
       loading: false,
-      title: false,
+      title: '',
     }
   },
   computed: {
@@ -66,7 +77,10 @@ export default {
   methods: {
     init() {},
     onObtainedForm(data){
-      this.title = data.title
+      this.title = data.title ? data.title : ''
+    },
+    copyUrl(){
+      this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
     }
   }
 }

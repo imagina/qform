@@ -13,13 +13,13 @@
           ">
             <!--Form title-->
             <div class="box box-auto-height">
-              <div class="row text-primary text-weight-bold ellipsis title-content items-center">
-                <div class="col-11">
+              <div class="row text-primary text-weight-bold title-content items-center">
+                <div class="col-11 ellipsis">
                   <label id="formFillPageTitle">{{$tr('isite.cms.label.form')}} : {{ title }}</label>
                 </div>
                 <div class="col-1">
                   <q-btn
-                    icon="fa-light fa-clipboard-list-check"
+                    icon="fa-light fa-copy"
                     @click="copyUrl"
                     unelevated
                     rounded

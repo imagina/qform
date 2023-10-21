@@ -70,7 +70,7 @@ export default {
               label: this.$trp('isite.cms.label.copyEmbedHtml'),
             },
             {
-              icon: "fa-light fa-file-plus",
+              icon: "fa-light fa-clipboard-list-check",
               color: 'info',
               route: 'qform.main.leads.create',
               label: this.$tr('iforms.cms.fillForm'),

@@ -39,12 +39,18 @@ export default {
             include: '_form.vue'
           },
         },
-        update: {title: this.$tr('iforms.cms.updateField')},
+        update: {
+          title: this.$tr('iforms.cms.updateField'),
+        },
         delete: true,
         formLeft: {
           id: {value: ''},
-          formId: {value: this.$route.params.id},
-          blockId: {value: this.$route.params.blockId},
+          formId: {
+            value: this.$route.params.id
+          },
+          blockId: {
+            value: this.$route.params.blockId
+          },
           label: {
             value: '',
             type: 'input',
@@ -61,7 +67,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('iforms.cms.form.placeholder')
+              label: this.$tr('iforms.cms.form.placeholder'),
             }
           },
           description: {
@@ -171,7 +177,6 @@ export default {
               vIf: (this.crudInfo.suffix && this.crudInfo.suffix.type) ? true : false
             }
           },
-
           required: {
             value: false,
             type: 'checkbox',

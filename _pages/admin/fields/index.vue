@@ -91,7 +91,6 @@
         </div>
         <draggable
           @change="updateOrderBlock"
-          :list="formData.blocks" 
           group="bocksBlocks"
           v-bind="dragOptions" 
           v-model="formData.blocks" 
@@ -115,7 +114,7 @@
               :list="block.fields"
               group="bocksfields"
               v-bind="dragOptions"
-              class="draggable-fields"
+              class="w-full draggable-fields"
               :class="{
                 'drag-drog-field': block.fields.length === 0
               }"
@@ -224,7 +223,6 @@ export default {
 }
 
 .draggable-fields {
-  width: 100%;
   min-height: 199px;
 }
 

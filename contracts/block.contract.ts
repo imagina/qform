@@ -6,7 +6,7 @@ export interface Block {
     name?: string;
     description?: string;
     parentId: number;
-    fields?: Field[];
+    fields: Field[];
     createdAt: string;
     sortOrder?: number;
     sort_order?: number;

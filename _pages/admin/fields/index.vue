@@ -1,124 +1,164 @@
 <template>
-  <div id="formfieldsPage" class="layout-padding">
+  <div 
+    id="formfieldsPage" 
+    class="layout-padding"
+  >
     <!--Blocks Crud-->
-    <crud :crud-data="import('@imagina/qform/_crud/blocks')" :custom-data="customCrudBlocks" type="no-index"
-          ref="crudBlocks" @updated="getData(true)" @deleted="getData(true)" @created="getData(true)"/>
+    <crud 
+      :crud-data="import('@imagina/qform/_crud/blocks')" 
+      :custom-data="customCrudBlocks" type="no-index"
+      ref="crudBlocks" 
+      @updated="getData(false)" 
+      @deleted="getData(false)" 
+      @created="getData(false)"
+    />
     <!--Fields Crud-->
-    <crud :crud-data="import('@imagina/qform/_crud/fields')" :custom-data="customCrudFields" type="no-index"
-          ref="crudFields" @updated="getData(true)" @deleted="getData(true)" @created="getData(true)"/>
+    <crud 
+      :crud-data="import('@imagina/qform/_crud/fields')" 
+      :custom-data="customCrudFields" 
+      type="no-index"
+      ref="crudFields" 
+      @updated="getData(false)"
+      @deleted="getData(false)"
+      @created="getData(false)"
+    />
+
+    <crud 
+      :crud-data="import('@imagina/qform/_crud/crudForms.vue')" 
+      :custom-data="customCrudForm" 
+      type="no-index"
+      @deleted="redirect"
+      ref="crudForm" 
+    />
 
     <!--page Content-->
-    <div id="formfieldsPageContent" class="row q-col-gutter-md relative-position">
+    <div 
+      id="formfieldsPageContent" 
+      class="row q-col-gutter-md relative-position"
+    >
       <!--Form info-->
-      <div class="col-12" v-if="formData">
+      <q-skeleton v-if="loadingSkeleton" width="100vw" height="70px" />
+      <div 
+        class="col-12" 
+        v-if="formData && !loadingSkeleton"
+      >
         <!--Page Actions-->
         <div class="box box-auto-height">
-          <page-actions :title="`${$tr('isite.cms.label.form')}: ${formData.title}`" :extra-actions="['new']"
-                        @new="$refs.crudBlocks.create()" @refresh="getData(true)"/>
+          <page-actions 
+            :title="`${$tr('isite.cms.label.form')}: ${formData.title}`"
+            @refresh="getData"
+            :extraActions="editAction"
+            icon="fa-light fa-clipboard-list"
+            :description="showDescription"
+            :documentation="showTooltip"
+          />
         </div>
       </div>
       <!--Blocks content (draggable)-->
-      <div class="col-12">
-        <draggable @update="updateOrderBlock" @change="updateOrderBlock" :list="formData.blocks" group="bocksBlocks"
-                   v-bind="dragOptions" v-model="formData.blocks"
-                   style="min-height: 60px" class="list-group row q-col-gutter-md">
-          <div v-for="block in formData.blocks" :key="block.id" class="block-content col-12 col-md-6 col-lg-4">
-            <div class="box">
-              <!--Block info-->
-              <div class="block-info relative-position row justify-between items-center q-mb-md">
-                <!--Block Title-->
-                <div class="box-title col-12 q-py-sm q-pr-xl">
-                  <div class="block-info-title ellipsis cursor-pointer">
-                    <q-icon name="fas fa-arrows-alt"></q-icon>
-                    {{ $tr('isite.cms.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
-                    <q-tooltip>{{ block.title }}</q-tooltip>
-                  </div>
-                </div>
-                <!--Button action-->
-                <div class="absolute-top-right">
-                  <q-btn class="file-card-bottom-actionss" icon="fas fa-ellipsis-v" unelevated round flat
-                         padding="sm" size="10px" color="blue-grey">
-                    <!---Menu actions-->
-                    <q-menu anchor="bottom left" self="bottom end">
-                      <q-list style="min-width: 100px">
-                        <q-item clickable v-close-popup v-for="(actionBlock, itemKey) in fileActionsBlock"
-                                :key="itemKey" @click.native="actionBlock.action(block)">
-                          <q-item-section>
-                            <div class="row items-center">
-                              <q-icon :name="actionBlock.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
-                              {{ actionBlock.label }}
-                            </div>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-menu>
-                  </q-btn>
-                </div>
-                <!--Block description-->
-                <div class="block-info-description q-mt-xs col-12 ellipsis-3-lines">
-                  {{ block.description }}
-                  <q-tooltip>{{ block.description }}</q-tooltip>
-                </div>
-              </div>
-              <!--Block Fields-->
-              <div class="block-fields">
-                <!--Fields Information-->
-                <div class="row justify-between items-center">
-                  <!--Title-->
-                  <div class="box-title">{{ $trp('isite.cms.label.field') }}</div>
-                  <!--Btn to create field-->
-                  <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fa-light fa-plus"
-                         color="primary" padding="sm" size="10px" rounded unelevated outline>
-                    <q-tooltip>{{ $tr('iforms.cms.newField') }}</q-tooltip>
-                  </q-btn>
-                </div>
-                <div id="contentFields" class="q-mt-md">
-                  <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
-                                 style="height: 200px">
-                    <!--Fields content (draggable)-->
-                    <draggable @update="updateOrderField" @change="updateOrderField" :list="block.fields"
-                               group="bocksfields"
-                               v-bind="dragOptions" class="list-group block"
-                               style="min-height: 199px; width: 100%">
-                      <div v-for="(field, fieldkey) in block.fields" :key="field.id"
-                           class="items-center cursor-pointer">
-                        <!--Field-->
-                        <div class="row justify-between items-center relative-position q-py-xs">
-                          <!--Field title-->
-                          <div class="ellipsis text-grey-9 q-mr-xl">
-                            <q-icon name="fa-light fa-arrows-up-down-left-right" class="q-mr-xs"/>
-                            {{ field.label }}
-                          </div>
-                          <!--Field Actions-->
-                          <q-btn class="absolute-top-right" icon="fas fa-ellipsis-v" unelevated round flat
-                                 padding="sm" size="10px" color="blue-grey">
-                            <!---Menu actions-->
-                            <q-menu anchor="bottom left" self="bottom end">
-                              <q-list style="min-width: 100px">
-                                <q-item clickable v-close-popup v-for="(actionfield, itemKey) in fileActionsField"
-                                        :key="itemKey" @click.native="actionfield.action(field)">
-                                  <q-item-section>
-                                    <div class="row items-center">
-                                      <q-icon :name="actionfield.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
-                                      {{ actionfield.label }}
-                                    </div>
-                                  </q-item-section>
-                                </q-item>
-                              </q-list>
-                            </q-menu>
-                          </q-btn>
-                          <!--Separator-->
-                          <div class="col-12 q-my-xs">
-                            <q-separator class="col-12 q-my-xs"/>
-                          </div>
-                        </div>
-                      </div>
-                    </draggable>
-                  </q-scroll-area>
+      <div :class="{ 'content-dropdown col-12': isSon, 'col-12': !isSon }">
+        <article class="block-list-container q-pr-md" v-if="isSon">
+          <q-skeleton v-if="loadingSkeleton" height="55vh" />
+          <router-link
+            class="parent-list-header"
+            v-if="!loadingSkeleton"
+            target="_blank" 
+            :to="`/form/fields/${parentForm.id}`"
+          >
+            <h2 class="blue-grey-9 text-h6 q-mr-md">
+              {{ parentForm.title }}
+            </h2>
+            <i class="fa-light fa-arrow-up-right-from-square"></i>
+            <q-tooltip>
+              {{ $tr('iforms.cms.label.openParentForm') }}
+            </q-tooltip>           
+          </router-link>
+          <dropdownList 
+            v-for="(block, key) in parentForm.blocks" 
+            v-if="!loadingSkeleton"
+            :block="block"
+            :key="key"
+            :index="key + 1"
+            :childFields="formData.blocks"
+          />
+        </article>
+        <div class="list-blocks-skeleton" v-if="loadingSkeleton">
+          <q-skeleton 
+            v-for="skeleton in new Array(6)" 
+            :key="skeleton" 
+            width="100%" 
+            height="350px" 
+          />
+        </div>
+        <draggable
+          @change="updateOrderBlock"
+          :list="formData.blocks" 
+          group="bocksBlocks"
+          v-bind="dragOptions" 
+          v-model="formData.blocks" 
+          class="list-blocks"
+          :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
+          draggable=".enable"
+        >
+          <block 
+            v-for="block in formData.blocks"
+            v-if="!loadingSkeleton" 
+            :key="block.id" 
+            :block="block"
+            :isSon="isSon"
+            @createField="createField"
+            :softLoading="softLoading"
+            :updatedBlockId="updatedBlockId"
+          >
+            <draggable 
+              @update="handleUpdatingFields" 
+              @change="props => handleChangeInFields(props, block.id)"
+              :list="block.fields"
+              group="bocksfields"
+              v-bind="dragOptions"
+              class="draggable-fields"
+              :class="{
+                'drag-drog-field': block.fields.length === 0
+              }"
+              :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
+            >
+              <div 
+                v-for="field in block.fields" :key="field.id"
+                class="items-center cursor-pointer"
+              >
+                <!--Field-->
+                <div class="relative-position q-mb-sm">
+                    <!--Field title-->
+                    <div class="list-item-block text-grey-9">
+                      <q-icon 
+                        name="fa-sharp fa-light fa-grip-dots-vertical" 
+                        class="q-mr-xs"
+                      />
+                      <span class="title-field">
+                        {{ field.label || '--' }}
+                      </span>
+                    </div>
+                    <dropdownMenu 
+                      :block="field" 
+                      :is-field="true"
+                      @updateIdOfSelectedField="updateIdOfSelectedField"
+                    />
                 </div>
               </div>
-            </div>
-          </div>
+            </draggable>
+          </block>
+          <button 
+            class="btn-add-block"
+            @click="handleCreateBlock"
+            :disable="loading"
+            v-show="!loadingSkeleton"
+          >
+            <span class="text-h3">
+              <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
+            </span>
+            <span class="text-subtitle1 text-blue-grey-6" >
+              {{ $tr('iforms.cms.label.addNewBlock') }}
+            </span>
+          </button>
         </draggable>
       </div>
       <!--Inner Loading-->
@@ -132,241 +172,137 @@
 import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
 import formForm from '@imagina/qform/_components/admin/forms/form'
 import draggable from 'vuedraggable'
+import block from '@imagina/qform/_components/fields/block'
+import dropdownList from '@imagina/qform/_components/fields/dropdownList'
+import dropdownMenu from '@imagina/qform/_components/fields/dropdownMenu.vue'
+import useFields from '@imagina/qform/uses/useFields.ts'
 
 export default {
-  props: {},
   components: {
     draggable,
     renderForm,
-    formForm
+    formForm,
+    dropdownList,
+    dropdownMenu,
+    block,
   },
-  watch: {
-    fields: function () {
-      this.fields.forEach((element, index) => {
-        element.order = index
-      })
-    },
-  },
-  mounted() {
-    this.$nextTick(function () {
-      this.init()
-    })
-  },
-  data() {
-    return {
-      loading: false,
-      dragOptions: {
-        animation: 200,
-        disabled: false,
-        ghostClass: "ghost"
-      },
-      formData: false,
-      blockCreateField: false,
-      fields: [],
-
-      //Style of Scroll area
-      thumbStyle: {
-        right: '-11px',
-        borderRadius: '5px',
-        backgroundColor: '#555',
-        width: '5px',
-        opacity: 0.75,
-      },
-      contentActiveStyle: {
-        color: 'black'
-      }
-    }
-  },
-  computed: {
-    //Custom Crud blocks
-    customCrudBlocks() {
-      return {
-        getDataForm: (data, typeForm) => {
-          return new Promise((resolve, reject) => {
-            //Transform data of created
-            if (typeForm == 'create') {
-              //asigned sortOrder
-              data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
-            }
-
-            resolve(data)
-          })
-        },
-      }
-    },
-    //Custom Crud fields
-    customCrudFields() {
-      return {
-        getDataForm: (data, typeForm) => {
-          return new Promise((resolve, reject) => {
-            //Transform data of created
-            if (typeForm == 'create') {
-              //Set block ID
-              data.blockId = this.blockCreateField
-              //asigned order
-              data.Order = this.formData.order ? (this.formData.order.length + 1) : 1
-              //Set field name value
-              data.name = this.$helper.getSlug(data[this.$store.state.qsiteApp.defaultLocale].label)
-            }
-
-            //Response
-            resolve(data)
-          })
-        },
-      }
-    },
-    //File Actions field
-    fileActionsField() {
-      return [
-        {
-          label: this.$tr('isite.cms.label.edit'),
-          icon: 'fas fa-pen',
-          color: 'green',
-          action: (field) => {
-            this.$refs.crudFields.update(field)
-          }
-        },
-        {
-          label: this.$tr('isite.cms.label.delete'),
-          icon: 'fas fa-trash',
-          color: 'red',
-          action: (field) => {
-            this.$refs.crudFields.delete(field)
-          }
-        }
-      ]
-    },
-    //File Actions Block
-    fileActionsBlock() {
-      return [
-        {
-          label: this.$tr('isite.cms.label.edit'),
-          icon: 'fas fa-pen',
-          color: 'green',
-          action: (block) => {
-            this.$refs.crudBlocks.update(block)
-          }
-        },
-        {
-          label: this.$tr('isite.cms.label.delete'),
-          icon: 'fas fa-trash',
-          color: 'red',
-          action: (block) => {
-            this.$refs.crudBlocks.delete(block)
-          }
-        }
-      ]
-    },
-  },
-  methods: {
-    init() {
-      //Get form data
-      this.getData(true)
-    },
-    //Get form data
-    getData(refresh = false) {
-      return new Promise((resolve, reject) => {
-        this.loading = true
-        //request params
-        let requestParams = {
-          refresh: refresh,
-          params: {
-            include: 'blocks.fields'
-          }
-        }
-        //Request
-        this.$crud.show('apiRoutes.qform.forms', this.$route.params.id, requestParams).then(response => {
-          this.formData = response.data
-          this.loading = false
-        }).catch(error => {
-          this.$apiResponse.handleError(error, () => {
-            this.loading = false
-          })
-        })
-      })
-    },
-
-    //order data Fields
-    getDataFields() {
-      let response = []
-      let formData = this.$clone(this.formData)
-
-      //travel blocks
-      formData.blocks.forEach(block => {
-        //travel fields
-        block.fields.forEach(field => {
-          //assigned field `blockID`
-          field.block_id = this.$clone(block.id)
-          //assigned field `order`
-          field.order = response.length + 1
-          response.push(field)
-        })
-      })
-      //Response
-      return response
-    },
-
-    //update order field
-    updateOrderField() {
-      // return this.getDataFields()
-      this.loading = true
-      let dataFields = {attributes: this.getDataFields()}
-
-      this.$crud.put('apiRoutes.qform.formFields', dataFields)
-          .then(response => {
-            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-          })
-    },
-
-    getDataBlock() {
-      let response = []
-      let formData = this.$clone(this.formData)
-      //travel blocks
-      formData.blocks.forEach(block => {
-        block.sort_order = response.length + 1
-        response.push(block)
-      })
-      //Response
-      return response
-    },
-    //update order block
-    updateOrderBlock() {
-      this.loading = true
-      let dataBlocks = {attributes: this.getDataBlock()}
-      this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
-          .then(response => {
-            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-          })
-    }
+  setup(props, { attrs }) {
+    return { ...useFields(attrs) }
   }
 }
 </script>
-<style lang="stylus">
-#formfieldsPageContent
 
-  .block-content
+<style scope>
 
-    .block-info-description
-      line-height 1.2
-      font-size 14px
-      text-align justify
-      color $grey-8
-      max-height 50px
-      min-height 50px
+.block-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 200px;
+  max-width: 500px;
+  gap: 6.4px;
+  margin: 0 auto;
+}
 
-  #contentFields
-    border-style dotted
-    border-width 1px
-    boder-color #cccccc
-    padding 7px 15px 7px 7px
+.parent-list-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 0;
+  margin-bottom: 8px;
+}
+
+.parent-list-header:hover {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+.parent-list-header > h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.draggable-fields {
+  width: 100%;
+  min-height: 199px;
+}
+
+.drag-drog-field {
+  color: #cccccc;
+  text-align: center;
+  border-radius: 10px;
+  border: dashed 2px #cccccc;
+  padding: 24px;
+}
+
+.title-field {
+  width: 250px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drag-drog-field[data-descr]::after {
+  content: attr(data-descr);
+}
+
+.content-dropdown {
+  display: grid;
+  grid-template-columns: minmax(30%, 100px) 1fr;
+}
+
+.list-blocks {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit, 
+    minmax(300px, var(--max-size))
+  );
+  grid-template-rows: min-content;
+  gap: 15px;
+}
+
+.list-blocks-skeleton {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit, 
+    minmax(300px, 1fr)
+  );
+  grid-template-rows: min-content;
+  gap: 15px;
+}
+
+.btn-add-block {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 370px;
+  height: 370px;
+  border: dashed 2px #cccccc;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.list-item-block {
+  display: flex;
+  align-items: center;
+  width: 97%;
+  box-sizing: border-box;
+  padding: 12px 8px;
+  border: solid #d8d8d8 1px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.list-item-block:active {
+  cursor: grabbing;
+}
+
+.list-item-block:hover {
+  background-color: #f5f5f5;
+}
+  
 </style>

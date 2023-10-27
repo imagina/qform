@@ -3,7 +3,49 @@
 export default {
   data() {
     return {
-      crudId: this.$uid()
+      crudId: this.$uid(),
+    }
+  },
+  methods: {
+    createChildForm(parent) {
+      const name = `${parent.title} (hijo)`
+      const title = parent.title
+      this.$alert.info({
+        mode: 'modal',
+        message: `${this.$tr('isite.cms.label.wantToCreateAChildForm', { title })}`,
+        actions: [
+          {
+            label: this.$tr('isite.cms.label.cancel'),
+            color: 'grey',
+          },
+          {
+            label: this.$tr('isite.cms.label.create'),
+            color: 'green',
+            promise: () => {
+              return new Promise((resolve, reject) => {
+                const requestData = {
+                  title: name,
+                  system_name: name,
+                  parentId: parent.id,
+                  active: 1,
+                }
+                this.$crud.create('apiRoutes.qform.forms', requestData)
+                  .then(response => {
+                    resolve(true)
+                    const { data: { id } } = response
+                    const path = {
+                      name: 'qform.admin.fields.index',
+                      params: { id }
+                    }
+                    this.$router.push(path)
+                  }).catch(err => {
+                    reject(err)
+                  })
+              })
+            }
+          }
+        ]
+      })
     }
   },
   computed: {
@@ -19,13 +61,30 @@ export default {
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px', align: 'left'},
-            {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'left'},
+            {
+              name: 'id', 
+              label: this.$tr('isite.cms.form.id'), 
+              field: 'id', 
+              style: 'width: 50px', 
+              align: 'left', 
+            },
+            {
+              name: 'title', 
+              label: this.$tr('isite.cms.form.title'), 
+              field: 'title', align: 'left',
+              action: (item) => { 
+                this.$router.replace({ path: `/form/fields/${item.id}/` }) 
+              }
+            },
             {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'systemName', align: 'left'},
             {name: 'active', label: this.$tr('isite.cms.form.status'), field: 'active', align: 'left'},
             {
               name: 'user', label: this.$tr('isite.cms.label.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : '-'
+            },
+            {
+              name: 'parent', label: this.$tr('isite.cms.form.parent'), field: 'parent', align: 'left',
+              format: val => (val && val.title) ? val.title : '-'
             },
             {
               name: 'destinationEmail',
@@ -39,7 +98,7 @@ export default {
 
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
-          requestParams: {include: 'user'},
+          requestParams: {include: 'user,parent'},
           filters: {
             userId: {
               value: '0',
@@ -58,27 +117,27 @@ export default {
           },
           actions: [
             {
-              icon: 'fas fa-list-ol',
+              icon: "fa-light fa-clone",
+              action: this.createChildForm,
               color: 'info',
-              route: 'qform.admin.fields.index',
-              label: this.$trp('isite.cms.label.field')
+              label: this.$tr('isite.cms.label.createChildForm'),
+              format: form => {
+                return {
+                  vIf: !form.parent
+                }
+              },
             },
             {
               icon: "fa-light fa-file-code",
               action: (item) => this.$helper.copyToClipboard(item.embed, 'isite.cms.messages.copyToClipboard'),
               color: 'info',
               label: this.$trp('isite.cms.label.copyEmbedHtml'),
-            },
-            {
-              icon: "fa-light fa-clipboard-list-check",
-              color: 'info',
-              route: 'qform.main.leads.create',
-              label: this.$tr('iforms.cms.fillForm'),
-            },
+            }
           ]
         },
         update: {
-          title: this.$tr('iforms.cms.updateForm')
+          title: this.$tr('iforms.cms.updateForm'),
+          to:  'qform.admin.fields.index',
         },
         delete: true,
         formLeft: {
@@ -92,7 +151,7 @@ export default {
               rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
             }
           },
-          status: {
+          active: {
             value: '1',
             type: 'select',
             props: {
@@ -137,7 +196,7 @@ export default {
             props: {
               label: `${this.$tr('iforms.cms.form.urlTermsAndConditions')}`,
             }
-          },
+          }
         },
         formRight: {
           successText: {
@@ -165,7 +224,7 @@ export default {
             type: 'select',
             isFakeField: true,
             props: {
-              vIf: this.crudInfo.typeForm == 'update',
+              vIf: this.crudInfo.typeForm === 'update',
               label: this.$tr('iforms.cms.replyTo')
             },
             loadOptions: {
@@ -179,7 +238,7 @@ export default {
             type: 'select',
             isFakeField: true,
             props: {
-              vIf: this.crudInfo.typeForm == 'update',
+              vIf: this.crudInfo.typeForm === 'update',
               label: this.$tr('iforms.cms.replyToName')
             },
             loadOptions: {
@@ -187,18 +246,45 @@ export default {
               requestParams: {filter: {formId: this.crudInfo.id}},
               select: {label: 'name', id: 'id'}
             }
-          }
+          },
+          parentId: {
+            value: '',
+            type: 'select',
+            props: {
+              label: 'Formulario padre',
+              clearable: true,
+              readonly: this.crudInfo.typeForm === 'update'
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qform.forms',
+              requestParams: {
+                filter: {
+                  parentId: null
+                }
+              },
+              select: {
+                label: 'title', 
+                id: 'id'
+              },
+            }
+          },
         },
         getDataForm: (data, typeForm) => {
           return new Promise((resolve, reject) => {
-            if (typeForm == 'create') {
+            if (typeForm === 'create') {
               let defaultLocale = this.$store.state.qsiteApp.defaultLocale
               let formTitle = data[defaultLocale].title
               data.systemName = this.$helper.getSlug(formTitle)
             }
             resolve(data)
           })
-        }
+        },
+        events: {
+          createdSon: (itemId) => {
+            const path = `/form/fields/${itemId}`
+            this.$router.push(path)
+          },
+        },
       }
     },
     //Crud info

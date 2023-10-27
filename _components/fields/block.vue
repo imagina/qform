@@ -3,10 +3,12 @@
     case it is used because it is the way in which 
     you activate or deactivate the draggable. 
     See draggable prop of draggable -->
-    <div :class="{
-        'box block-container enable': true, 
-        'animation-loading': activateLoadingAnimation
-    }">
+    <div 
+        class="box block-container enable"
+        :class="{
+            'animation-loading': activateLoadingAnimation
+        }"
+    >
         <!--Block info-->
         <div class="block-info relative-position row justify-between items-center q-mb-md">
         <!--Block Title-->

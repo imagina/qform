@@ -114,9 +114,9 @@
               @change="props => handleChangeInFields(props, block.id)"
               :list="block.fields"
               group="bocksfields"
-              v-bind="dragOptions" 
+              v-bind="dragOptions"
+              class="draggable-fields"
               :class="{
-                'draggable-fields': true,
                 'drag-drog-field': block.fields.length === 0
               }"
               :data-descr="$tr('iforms.cms.label.dragFieldsHere')"

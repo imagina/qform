@@ -24,7 +24,7 @@ import {
   CrudBlocks,
 } from '@imagina/qform/contracts/'
 
-import { dataForm } from '@imagina/qform/models'
+import { dataForm, customProps } from '@imagina/qform/models'
 
 import VueRouter from 'vue-router'
 
@@ -154,49 +154,7 @@ export default function useCrudLeads(attrs) {
   })
 
   const customPropsOnUpdate = computed(() => {
-    return isSon.value ? {
-      update: {
-        description: Vue.prototype.$tr('iforms.cms.message.fieldEditingModalbanner'),
-        customFormProps: {
-          type: {
-            props: {
-              readonly: true
-            },
-          },
-          entity: {
-            props: {
-              readonly: true
-            }
-          },
-          max: {
-            props: {
-              readonly: true
-            }
-          },
-          min: {
-            props: {
-              readonly: true
-            }
-          },
-          maxlength: {
-            props: {
-              readonly: true
-            }
-          },
-          mimes: {
-            props: {
-              readonly: true
-            }
-          },
-          required: {
-            props: {
-              readonly: true,
-              disabled: true
-            }
-          }
-        }
-      },
-    } : {}
+    return isSon.value ? customProps : {}
   })
 
   const showDescription = computed(() => {

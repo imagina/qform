@@ -1,14 +1,14 @@
-import { Field } from "@imagina/qform/models/field.model";
+import { Field } from "@imagina/qform/contracts/field.contract";
 
 export interface Block {
-    id: number;
+    id?: number;
     title?: string;
     name?: string;
     description?: string;
     parentId: number;
-    fields: Field[];
+    fields?: Field[];
     createdAt: string;
-    sortOrder: number;
-    sort_order: number;
+    sortOrder?: number;
+    sort_order?: number;
     updatedAt: string;
 }

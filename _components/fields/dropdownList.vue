@@ -6,7 +6,7 @@
             class="list-header"
             @click="onUnfolded"
         >
-            {{ block.title || block.name || `Bloque #${index}`}}
+            {{ nameBlock }}
         </button>
         <div
             v-if="block.fields.length === 0"
@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { onMounted, ref, toRefs, watch } from 'vue'
 import draggable from 'vuedraggable'
+import useDropdownList from '@imagina/qform/uses/useDropdownList.ts'
 
 export default {
     props: {
@@ -70,71 +70,8 @@ export default {
     components: {
         draggable
     },
-    setup(props, { emit }) {
-        const isUnfolded = ref(true)
-        const { index, block, childFields } = toRefs(props)
-        const dragOptions = ref({
-            animation: 200,
-            disabled: false,
-            ghostClass: "ghost"
-        })
-        const onUnfolded = () => {
-            isUnfolded.value = !isUnfolded.value
-        }
-        const refItemField = ref(null)
-        const idRef = ref(null)
-
-        onMounted(() => {
-            checkAssets()
-        })
-
-        watch(childFields, () => {
-            checkAssets()
-        })
-
-        const checkAssets = (idField) => {    
-            const idOfChildFields = []
-            if (idField) idOfChildFields.push(idField)
-
-            childFields.value.map(block => {
-                if (block) {
-                    block?.fields.map(
-                        field => idOfChildFields.push(field?.parentId)
-                    )
-                }
-            })
-
-            refItemField.value?.map((el, index) => {
-                const id = Number(refItemField.value[index].attributes.id.value)
-                if (idField) {
-                    if (id === idField) {
-                        refItemField.value[index].classList.add('disable')
-                        refItemField.value[index].classList.remove('enable')
-                    }
-                    return null
-                }
-
-                if (idOfChildFields.includes(id)) {
-                    refItemField.value[index].classList.add('disable')
-                    refItemField.value[index].classList.remove('enable')
-                    return null
-                }
-
-                refItemField.value[index].classList.remove('disable')
-                refItemField.value[index].classList.add('enable')
-                
-            })
-        }
-    
-        return {
-            isUnfolded,
-            dragOptions,
-            block,
-            index,
-            refItemField,
-            onUnfolded,
-            checkAssets
-        }
+    setup(props) {
+        return { ...useDropdownList({ props }) }
     }
 }
 

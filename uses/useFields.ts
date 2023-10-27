@@ -10,8 +10,10 @@ import Vue, {
 import { 
   getForm, 
   createBlock, 
-  createField as createCopyField 
-} from '@imagina/qform/actions/form.service'
+  createField as createCopyField,
+  updateBlock,
+  updateField,
+} from '@imagina/qform/actions/manageForm'
 
 import { 
   Element, 
@@ -20,16 +22,20 @@ import {
   CrudFields, 
   CrudForm,
   CrudBlocks,
-} from '@imagina/qform/models/'
+} from '@imagina/qform/contracts/'
+
+import { dataForm } from '@imagina/qform/models'
 
 import VueRouter from 'vue-router'
 
 export default function useCrudLeads(attrs) {
+
   const loading = ref(false)
   const proxy = (getCurrentInstance() as any).proxy as any
   const updatedBlockId = ref(null)
   const loadingSkeleton = ref(false)
   const crudFields = ref<null | CrudFields>(null)
+  const formData = ref<Form>(dataForm);
   const crudBlocks = ref<null | CrudBlocks>(null)
   const crudForm = ref<null | CrudForm>(null)
   const softLoading = ref(false)
@@ -67,8 +73,7 @@ export default function useCrudLeads(attrs) {
     ghostClass: "ghost"
   })
   const isSon = ref(false);
-  const parentForm = ref([]);
-  const formData = ref<Form | Boolean>(false);
+  const parentForm = ref({});
   const blockCreateField = ref(false);
   const fields = ref([]);
   const timerId = ref<any>(0)
@@ -132,7 +137,7 @@ export default function useCrudLeads(attrs) {
             // Set block ID
             data.blockId = blockCreateField.value
             // Assigned order
-            data.Order = formData.value.order 
+            data.Order = formData.value.order
               ? (formData.value.order.length + 1) 
               : POSITION
             // Set field name value
@@ -279,21 +284,9 @@ export default function useCrudLeads(attrs) {
     return response
   }
 
-  const submitChangesToFields = async (data) => {
-    const ROUTE_REFERENCE = 'apiRoutes.qform.formFields'
-    try {
-      await Vue.prototype.$crud.put(ROUTE_REFERENCE, data)
-      successMessage()
-      softLoading.value = false
-    } catch (err) {
-      errorMessage()
-    }
-  }
-
-
   const handleUpdatingFields = async () => {
     softLoading.value = true
-    const dataFields = {
+    const data = {
       attributes: getDataFields()
     }
 
@@ -302,7 +295,13 @@ export default function useCrudLeads(attrs) {
     }
 
     timerId.value = setTimeout(async function () {
-      await submitChangesToFields(dataFields)
+      try {
+        await updateField({ data })
+        successMessage()
+        softLoading.value = false
+      } catch (err) {
+        errorMessage()
+      }
       timerId.value = null
     }, 1500)
 
@@ -341,21 +340,19 @@ export default function useCrudLeads(attrs) {
   }
 
   const updateOrderBlock = () => {
-    const ROUTE_REFERENCE = 'apiRoutes.qform.formBlocks'
-    const dataBlocks = { attributes: getDataBlock() }
+    const data = { attributes: getDataBlock() }
 
     if (timerIdBlock.value) {
       clearTimeout(timerIdBlock.value)
     }
 
-    timerIdBlock.value = setTimeout(() => {
-      Vue.prototype.$crud.put(ROUTE_REFERENCE, dataBlocks)
-        .then(() => {
-          successMessage()
-        })
-        .catch(() => {
-          errorMessage()
-        })
+    timerIdBlock.value = setTimeout(async () => {
+      try {
+        await updateBlock({ data })
+        successMessage()
+      } catch (err) {
+        errorMessage()
+      }
       timerIdBlock.value = null
     }, 1500)
   }

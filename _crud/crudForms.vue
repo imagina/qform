@@ -33,7 +33,10 @@ export default {
                   .then(response => {
                     resolve(true)
                     const { data: { id } } = response
-                    const path = `/form/fields/${id}`
+                    const path = {
+                      name: 'qform.admin.fields.index',
+                      params: { id }
+                    }
                     this.$router.push(path)
                   }).catch(err => {
                     reject(err)

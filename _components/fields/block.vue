@@ -5,7 +5,7 @@
     See draggable prop of draggable -->
     <div :class="{
         'box block-container enable': true, 
-        'animation-loading': softLoading && block.id === updatedBlockId
+        'animation-loading': activateLoadingAnimation
     }">
         <!--Block info-->
         <div class="block-info relative-position row justify-between items-center q-mb-md">
@@ -66,7 +66,7 @@
 
 <script>
 import dropdownMenu from '@imagina/qform/_components/fields/dropdownMenu.vue'
-import { toRefs, reactive } from 'vue'
+import useBlock from '@imagina/qform/uses/useBlock'
 
 export default {
     props: {
@@ -89,33 +89,7 @@ export default {
         dropdownMenu
     },
     setup(props, { emit }) {
-        const { block, isSon, softLoading, updatedBlockId } = toRefs(props)
-        //Style of Scroll area
-        const thumbStyle =  reactive({
-            right: '-11px',
-            borderRadius: '5px',
-            backgroundColor: '#555',
-            width: '5px',
-            opacity: 0.75,
-        })
-
-        const contentActiveStyle = reactive({
-            color: 'black'
-        })
-
-        const createField = (id) => {
-            emit('createField', id)
-        }
-
-        return {
-            block,
-            updatedBlockId,
-            thumbStyle,
-            contentActiveStyle,
-            isSon,
-            softLoading,
-            createField,
-        }
+        return { ...useBlock({ props, emit }) }
     }
 }
 </script>

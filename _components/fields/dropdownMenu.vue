@@ -18,7 +18,7 @@
             <q-item 
                 clickable 
                 v-close-popup 
-                v-for="(actionBlock, itemKey) in fileActionsBlock"
+                v-for="(actionBlock, itemKey) in actions"
                 :key="itemKey" 
                 @click.native="actionBlock.action(block)"
             >
@@ -39,7 +39,10 @@
     </q-btn>
 </template>
 
-<script>
+<script lang="ts">
+import { fileActions } from '@imagina/qform/models'
+import { computed, ref, toRefs } from 'vue'
+
 export default {
 props: {
     isField: {
@@ -51,37 +54,24 @@ props: {
         default: () => {}
     },
 },
-data() {
-    return {
-        crud: this.isField ? 'crudFields' : 'crudBlocks',
-        loading: false
-    }
-},
-inject: ['refs'],
 emits: ['updateIdOfSelectedField'],
-computed: {
-    fileActionsBlock() {
-        return [
-            {
-                label: this.$tr('isite.cms.label.edit'),
-                icon: 'fas fa-pen',
-                color: 'green',
-                action: element => {
-                    this.refs[this.crud].update(element)
-                }
-            },
-            {
-                label: this.$tr('isite.cms.label.delete'),
-                icon: 'fas fa-trash',
-                color: 'red',
-                action: element => {
-                    const id = this.isField ? 'blockId' : 'id'
-                    this.$emit('updateIdOfSelectedField', element[id])
-                    this.refs[this.crud].delete(element)
-                }
-            }
-        ]
-    },
-},
+setup(props, { emit }) {
+    const { isField, block } = toRefs(props)
+    const loading = ref(false)
+
+    const typeCrud = computed(() => {
+        return isField.value ? 'crudFields' : 'crudBlocks'
+    })
+
+    const actions = computed(() => {
+        return fileActions(emit, isField, typeCrud).value
+    })
+
+    return {
+        loading,
+        block,
+        actions
+    }
+}
 }
 </script>

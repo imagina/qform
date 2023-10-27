@@ -126,7 +126,7 @@
                 class="items-center cursor-pointer"
               >
                 <!--Field-->
-                <div class="row relative-position q-mb-sm">
+                <div class="relative-position q-mb-sm">
                     <!--Field title-->
                     <div class="list-item-block text-grey-9">
                       <q-icon 
@@ -289,7 +289,8 @@ export default {
 .list-item-block {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 97%;
+  box-sizing: border-box;
   padding: 12px 8px;
   border: solid #d8d8d8 1px;
   border-radius: 10px;

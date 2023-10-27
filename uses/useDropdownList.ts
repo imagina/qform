@@ -3,7 +3,7 @@ import { PropsDropdownList } from '@imagina/qform/contracts'
 
 export default function useDropdownList({ props }) {
     const isUnfolded = ref(true)
-    const { index, block, childFields } = toRefs<PropsDropdownList>(props);
+    const { index, block, childFields }: PropsDropdownList = computed(() => props).value;
     const dragOptions = ref({
         animation: 200,
         disabled: false,
@@ -12,7 +12,7 @@ export default function useDropdownList({ props }) {
     const onUnfolded = () => {
         isUnfolded.value = !isUnfolded.value
     }
-    const refItemField = ref<ComponentPublicInstance | null>(null)
+    const refItemField = ref<any>(null)
 
     onMounted(() => {
         checkAssets(null)
@@ -23,16 +23,16 @@ export default function useDropdownList({ props }) {
     })
 
     const nameBlock = computed(() => {
-        return block?.title || block?.name || `Bloque #${index.value}`
+        return block?.title || block?.name || `Bloque #${index}`
     })
 
     const checkAssets = (idField: number | null) => {    
         const idOfChildFields: Array<number> = []
         if (idField) idOfChildFields.push(idField)
 
-        childFields.value.map(block => {
+        childFields.map(block => {
             if (block) {
-                block?.fields.map(
+                block.fields.map(
                     field => idOfChildFields.push(field?.parentId)
                 )
             }

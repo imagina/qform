@@ -341,9 +341,8 @@ export default function useCrudLeads(attrs, props: any) {
   const handleCreateBlock = async () => {
     try {
       loading.value = true
-      console.log(attrs.id, formData.value.blocks.length);
       await createBlock(
-        attrs.id,
+        formId.value,
         formData.value.blocks.length + 1
       )
       await getData(false)

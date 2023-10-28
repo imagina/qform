@@ -1,7 +1,6 @@
-import Vue from 'vue';
+import crud from '@imagina/qcrud/_services/baseService.js'
 import { FormRequestResponse, UpdateResponse, RequestParams, Field, Block } from '@imagina/qform/contracts/';
 
-const crud = Vue.prototype.$crud
 const API_FORMS = 'apiRoutes.qform.forms'
 const API_BLOCKS = 'apiRoutes.qform.blocks'
 const API_FIELDS = 'apiRoutes.qform.formFields'
@@ -15,7 +14,7 @@ export const getForm = async (id, refresh = false): Promise<FormRequestResponse>
         },
     };
 
-    return Vue.prototype.$crud.show(API_FORMS, id, requestParams);
+    return crud.show(API_FORMS, id, requestParams);
 
 }
 
@@ -25,8 +24,7 @@ export const createBlock = async (formId, sortOrder): Promise<Block> => {
 }
 
 export const createField = async (data): Promise<Field> => {
-    return crud
-        .create(API_FIELDS, data)
+    return crud.create(API_FIELDS, data)
 }
 
 export const updateBlock = async ({ data }: { data: object }): Promise<UpdateResponse> => {

@@ -8,37 +8,14 @@ const API_FIELDS = 'apiRoutes.qform.formFields'
 const PARAMS_INCLUDE = 'blocks.fields';
 
 export const getForm = async (id, refresh=false): Promise<FormRequestResponse> => {
-    try {
-        const requestParams: RequestParams = {
-            refresh: refresh,
-            params: {
-                include: PARAMS_INCLUDE,
-            },
-        };
-    
-        return crud
-            .show(API_FORMS, id, requestParams);
-    } catch (error) {
-        console.log(error);
-        return {
-            data: {
-                id: 0,
-                title: '',
-                systemName: '',
-                blocks: [],
-                active:0,
-                createdAt: '',
-                embed: '',
-                order: null,
-                parentId: null,
-                formType: 0,
-                options: {},
-                updatedAt: '',
-                url: '',
-                fields: [],
-            }
-        }
-    }
+    const requestParams: RequestParams = {
+        refresh: refresh,
+        params: {
+            include: PARAMS_INCLUDE,
+        },
+    };
+
+    return Vue.prototype.$crud.show(API_FORMS, id, requestParams);
     
 }
 

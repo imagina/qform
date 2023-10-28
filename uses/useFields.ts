@@ -306,6 +306,7 @@ export default function useCrudLeads(attrs) {
         await updateBlock({ data })
         successMessage()
       } catch (err) {
+        console.log(err);
         errorMessage()
       }
       timerIdBlock.value = null
@@ -332,6 +333,8 @@ export default function useCrudLeads(attrs) {
       await getData(false)
       softLoading.value = false
     } catch (err) {
+      console.log(err);
+      softLoading.value = false
       errorMessage()
     }
   }
@@ -339,6 +342,7 @@ export default function useCrudLeads(attrs) {
   const handleCreateBlock = async () => {
     try {
       loading.value = true
+      console.log(attrs.id, formData.value.blocks.length);
       await createBlock(
         attrs.id,
         formData.value.blocks.length + 1
@@ -346,6 +350,8 @@ export default function useCrudLeads(attrs) {
       await getData(false)
       loading.value = false
     } catch (err) {
+      console.log(err);
+      loading.value = false
       errorMessage()
     }
   }

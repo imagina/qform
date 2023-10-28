@@ -185,8 +185,14 @@ export default {
     dropdownMenu,
     block,
   },
+  props: {
+    formId: {
+      type: Number,
+      defualt: null,
+    },
+  },
   setup(props, { attrs }) {
-    return { ...useFields(attrs) }
+    return { ...useFields(attrs, props) }
   }
 }
 </script>

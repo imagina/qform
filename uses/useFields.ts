@@ -28,8 +28,7 @@ import { dataForm, customProps } from '@imagina/qform/models'
 
 import VueRouter from 'vue-router'
 
-export default function useCrudLeads(attrs) {
-
+export default function useCrudLeads(attrs, props: any) {
   const loading = ref(false)
   const proxy = (getCurrentInstance() as any).proxy as any
   const updatedBlockId = ref(null)
@@ -165,7 +164,7 @@ export default function useCrudLeads(attrs) {
   })
 
   const formId = computed(() => {
-    return attrs.paramId || attrs.id
+    return props.formId || attrs.id
   })
 
   const showTooltip = computed(() => {

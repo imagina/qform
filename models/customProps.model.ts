@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
-export const customProps = {
+export const customProps = () => {
+  return {
     update: {
       description: Vue.prototype.$tr('iforms.cms.message.fieldEditingModalbanner'),
       customFormProps: {
@@ -43,3 +44,4 @@ export const customProps = {
       }
     },
   }
+}

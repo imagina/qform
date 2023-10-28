@@ -79,9 +79,10 @@ export default function useCrudLeads(attrs) {
   const timerId = ref<any>(0)
   const timerIdBlock = ref<any>(0)
 
-  onMounted(async () => {
-    await nextTick()
-    init()
+  onMounted(() => {
+    nextTick(async () => {
+      await getData();
+    })
   })
 
   watch(fields, () => {
@@ -216,10 +217,6 @@ export default function useCrudLeads(attrs) {
   const isAutoWidth = computed(() => {
     return formData.value?.blocks?.length === 1
   })
-
-  const init = async () => {
-    await getData()
-  }
 
   const getData = async (activateLoadingSkeleton=true) => {
     loadingSkeleton.value = activateLoadingSkeleton

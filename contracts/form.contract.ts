@@ -1,5 +1,4 @@
 import { Block } from "@imagina/qform/contracts/block.contract";
-import { Url } from "url";
 
 export interface Form {
     id?: number;

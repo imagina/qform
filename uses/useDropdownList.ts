@@ -3,7 +3,12 @@ import { PropsDropdownList } from '@imagina/qform/contracts'
 
 export default function useDropdownList({ props }) {
     const isUnfolded = ref(true)
-    const { index, block, childFields }: PropsDropdownList = computed(() => props).value;
+    const { 
+        index, 
+        block, 
+        childFields, 
+        copiedFieldId 
+    } = toRefs<PropsDropdownList>(props);
     const dragOptions = ref({
         animation: 200,
         disabled: false,
@@ -12,51 +17,50 @@ export default function useDropdownList({ props }) {
     const onUnfolded = () => {
         isUnfolded.value = !isUnfolded.value
     }
-    const refItemField = ref<any>(null)
+    const idChildFields = ref<Array<number>>([])
 
-    onMounted(() => {
-        checkAssets(null)
-    })
-
-    watch(childFields, () => {
-        checkAssets(null)
-    })
-
-    const nameBlock = computed(() => {
-        return block?.title || block?.name || `Bloque #${index}`
-    })
-
-    const checkAssets = (idField: number | null) => {    
-        const idOfChildFields: Array<number> = []
-        if (idField) idOfChildFields.push(idField)
-
-        childFields.map(block => {
+    const extractId = () => {
+        childFields.value.map(block => {
             if (block) {
                 block.fields.map(
-                    field => idOfChildFields.push(field?.parentId)
+                    field => {
+                        if (field?.parentId)
+                            idChildFields.value.push(field?.parentId)
+                    }
                 )
             }
         })
+    }
 
-        refItemField.value?.map((el, index) => {
-            const id = Number(refItemField.value[index].attributes.id.value)
-            if (idField) {
-                if (id === idField) {
-                    refItemField.value[index]?.classList.add('disable')
-                    refItemField.value[index]?.classList.remove('enable')
-                }
-                return null
+    onMounted(() => {
+        extractId()
+    })
+
+    watch(childFields, () => {
+        idChildFields.value = []
+        extractId()
+    })
+
+    watch(copiedFieldId, () => {
+        if (copiedFieldId.value) idChildFields.value.push(copiedFieldId.value)
+    })
+
+    const nameBlock = computed(() => {
+        return block.value?.title || block.value?.name || `Bloque #${index.value}`
+    })
+
+    const checkAssets = (idField: number | null) => {
+        const idParentFields: Array<number> = []
+
+        block.value.fields.map(field => {
+            if (field?.id)
+                idParentFields.push(field.id)
+        })
+
+        return idChildFields.value.some(parentId => {
+            if (idField === parentId) {
+                return idParentFields.includes(parentId)
             }
-
-            if (idOfChildFields.includes(id)) {
-                refItemField.value[index]?.classList.add('disable')
-                refItemField.value[index]?.classList.remove('enable')
-                return null
-            }
-
-            refItemField.value[index]?.classList.remove('disable')
-            refItemField.value[index]?.classList.add('enable')
-            
         })
     }
 
@@ -64,7 +68,6 @@ export default function useDropdownList({ props }) {
         isUnfolded,
         dragOptions,
         block,
-        refItemField,
         nameBlock,
         onUnfolded,
         checkAssets

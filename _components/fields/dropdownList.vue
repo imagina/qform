@@ -32,9 +32,11 @@
                 v-for="field in block.fields" 
                 :key="field.id"
                 :id="field.id"
-                class="list-item blue-grey enable"
-                ref="refItemField"
-                @dragend="checkAssets(field.id)"
+                class="list-item blue-grey"
+                :class="{
+                    'enable' : !checkAssets(field.id),
+                    'disable': checkAssets(field.id)
+                }"
             >
                 <q-icon 
                     name="fa-sharp fa-light fa-grip-dots-vertical" 
@@ -50,7 +52,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import useDropdownList from '@imagina/qform/uses/useDropdownList.ts'
+import useDropdownList from '@imagina/qform/uses/useDropdownList'
 
 export default {
     props: {
@@ -65,6 +67,10 @@ export default {
         index: {
             type: Number,
             default: 0
+        },
+        copiedFieldId: {
+            type: Number,
+            default: null
         }
     },
     components: {

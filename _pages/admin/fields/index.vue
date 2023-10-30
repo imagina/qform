@@ -178,6 +178,12 @@ import dropdownMenu from '@imagina/qform/_components/fields/dropdownMenu.vue'
 import useFields from '@imagina/qform/uses/useFields.ts'
 
 export default {
+  props: {
+      formId: {
+        type: Number,
+        default: null
+      },
+  },
   components: {
     draggable,
     renderForm,

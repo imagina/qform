@@ -280,8 +280,13 @@ export default {
           })
         },
         events: {
-          createdSon: (itemId) => {
-            const path = `/form/fields/${itemId}`
+          createdSon: (id) => {
+            const path = {
+              name: 'qform.admin.fields.index',
+              params: {
+                id
+              }
+            }
             this.$router.push(path)
           },
         },

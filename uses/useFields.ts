@@ -129,6 +129,10 @@ export default function useCrudLeads(attrs, props: any) {
     }
   })
 
+  const formId = computed(() => {
+    return props.formId || attrs.id
+  })
+
   const customCrudFields = computed(() => {
     const POSITION = 1
     return {
@@ -139,6 +143,7 @@ export default function useCrudLeads(attrs, props: any) {
           if (typeForm === 'create') {
             // Set block ID
             data.blockId = blockCreateField.value
+            data.formId = formId.value
             // Assigned order
             data.Order = formData.value.order
               ? (formData.value.order.length + 1) 
@@ -152,7 +157,7 @@ export default function useCrudLeads(attrs, props: any) {
           // Response
           resolve(data)
         })
-      },
+      }
     }
   })
 
@@ -164,10 +169,6 @@ export default function useCrudLeads(attrs, props: any) {
     return isSon.value
       ? Vue.prototype.$tr('iforms.cms.message.descriptionChildrenForm')
       : Vue.prototype.$tr('iforms.cms.message.descriptionParentForm')
-  })
-
-  const formId = computed(() => {
-    return props.formId || attrs.id
   })
 
   const showTooltip = computed(() => {

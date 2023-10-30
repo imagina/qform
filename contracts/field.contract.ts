@@ -1,5 +1,5 @@
 export interface Field {
-    blockId: number;
+    blockId?: number;
     dynamicField: {
         type: string, 
         name: string, 
@@ -9,14 +9,14 @@ export interface Field {
     };
     formId: number;
     id: number;
-    parentId: number;
+    parentId?: number;
     label: string;
     name: string;
     options: object;
     order: number;
     prefix: object;
     required: number;
-    block_id: number
+    block_id?: number
     rules: object;
     suffix: object;
     type: number;

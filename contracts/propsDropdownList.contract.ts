@@ -4,4 +4,5 @@ export interface PropsDropdownList {
     index: number;
     block: Block;
     childFields: Array<Block>;
+    copiedFieldId: number;
 }

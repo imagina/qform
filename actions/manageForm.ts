@@ -1,8 +1,18 @@
 import crud from '@imagina/qcrud/_services/baseService.js'
-import { FormRequestResponse, UpdateResponse, RequestParams, Field, Block } from '@imagina/qform/contracts/';
+import { 
+    FormRequestResponse, 
+    UpdateResponse, 
+    RequestParams, 
+    Field, 
+    Block,
+    DataUpdateBlock,
+    DataUpdateField 
+} from '@imagina/qform/contracts/';
+import { dataForm, dataBlock, dataField } from '@imagina/qform/models';
 
 const API_FORMS = 'apiRoutes.qform.forms'
 const API_BLOCKS = 'apiRoutes.qform.blocks'
+const API_CREATE_FIELDS = 'apiRoutes.qform.fields'
 const API_FIELDS = 'apiRoutes.qform.formFields'
 const PARAMS_INCLUDE = 'blocks.fields';
 
@@ -14,26 +24,44 @@ export const getForm = async (id, refresh = false): Promise<FormRequestResponse>
         },
     };
 
-    return crud.show(API_FORMS, id, requestParams);
-
+    try {
+        return await crud.show(API_FORMS, id, requestParams)
+    } catch (err) {
+        return { data: dataForm }
+    }
 }
 
 export const createBlock = async (formId, sortOrder): Promise<Block> => {
-    return crud
-        .create(API_BLOCKS, { formId, sortOrder })
+    try {
+        return await crud.create(API_BLOCKS, { formId, sortOrder })
+    } catch (err) {
+        return dataBlock
+    }
 }
 
 export const createField = async (data): Promise<Field> => {
-    return crud.create(API_FIELDS, data)
+    console.log(data)
+    try {
+        return await crud.create(API_CREATE_FIELDS, data)
+    } catch(err) {
+        return dataField
+    }
 }
 
-export const updateBlock = async ({ data }: { data: object }): Promise<UpdateResponse> => {
+export const updateBlock = async ({ data }: { data: DataUpdateBlock }): Promise<UpdateResponse> => {
     const ROUTE_REFERENCE = 'apiRoutes.qform.formBlocks'
 
-    return crud.put(ROUTE_REFERENCE, data)
+    try {
+        return await crud.put(ROUTE_REFERENCE, data)
+    } catch (err) {
+        return { data: '' }
+    }
 }
 
-export const updateField = async ({ data }: { data: object }): Promise<UpdateResponse> => {
-    return crud
-        .put(API_FIELDS, data)
+export const updateField = async ({ data }: { data: DataUpdateField }): Promise<UpdateResponse> => {
+    try {
+        return await crud.put(API_FIELDS, data)
+    } catch(err) {
+        return { data: '' }
+    }
 }

@@ -22,6 +22,8 @@ import {
   CrudFields, 
   CrudForm,
   CrudBlocks,
+  DataSentBlockUpdate,
+  DataSentFieldUpdate
 } from '@imagina/qform/contracts/'
 
 import { dataForm, customProps } from '@imagina/qform/models'
@@ -37,6 +39,7 @@ export default function useCrudLeads(attrs, props: any) {
   const formData = ref<Form>(dataForm);
   const crudBlocks = ref<null | CrudBlocks>(null)
   const crudForm = ref<null | CrudForm>(null)
+  const copiedFieldId = ref(null)
   const softLoading = ref(false)
   const editAction = ref([{
     action:() => {
@@ -214,7 +217,7 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const getDataFields = () => {
-    const response: Array<object> = []
+    const response: Array<DataSentFieldUpdate> = []
     const formDataClone = Vue.prototype.$clone(formData.value)
 
     formDataClone?.blocks.forEach(block => {
@@ -255,6 +258,7 @@ export default function useCrudLeads(attrs, props: any) {
         softLoading.value = false
       } catch (err) {
         errorMessage()
+        softLoading.value = false
       }
       timerId.value = null
     }, 1500)
@@ -264,11 +268,13 @@ export default function useCrudLeads(attrs, props: any) {
   const handleChangeInFields = async (props, idBlock) => {
     const field: Field = props?.added?.element
     updatedBlockId.value = idBlock
+    const differentFormId = formData.value?.id !== field?.formId
     if (
+      field &&
       isSon.value &&
       !field?.parentId &&
-      formData.value?.id !== field?.formId &&
-      field?.formId
+      differentFormId &&
+      idBlock
     ) {
       await cloneField({ idBlock, field })
       return null
@@ -278,7 +284,7 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const getDataBlock = () => {
-    const response: Array<object> = []
+    const response: Array<DataSentBlockUpdate> = []
     const formDataClone = Vue.prototype.$clone(formData.value)
     formDataClone?.blocks?.forEach(block => {
       if (block) {
@@ -294,7 +300,9 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const updateOrderBlock = () => {
-    const data = { attributes: getDataBlock() }
+    const data = { 
+      attributes: getDataBlock() 
+    }
 
     if (timerIdBlock.value) {
       clearTimeout(timerIdBlock.value)
@@ -305,7 +313,6 @@ export default function useCrudLeads(attrs, props: any) {
         await updateBlock({ data })
         successMessage()
       } catch (err) {
-        console.log(err);
         errorMessage()
       }
       timerIdBlock.value = null
@@ -319,6 +326,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const cloneField = async ({ idBlock, field }) => {
     softLoading.value = true
+    copiedFieldId.value = field?.id
     const data = {
       ...field
     }
@@ -332,9 +340,8 @@ export default function useCrudLeads(attrs, props: any) {
       await getData(false)
       softLoading.value = false
     } catch (err) {
-      console.log(err);
-      softLoading.value = false
       errorMessage()
+      softLoading.value = false
     }
   }
 
@@ -348,9 +355,8 @@ export default function useCrudLeads(attrs, props: any) {
       await getData(false)
       loading.value = false
     } catch (err) {
-      console.log(err);
-      loading.value = false
       errorMessage()
+      loading.value = false
     }
   }
 
@@ -382,6 +388,7 @@ export default function useCrudLeads(attrs, props: any) {
     customCrudFields,
     showTooltip,
     isAutoWidth,
+    copiedFieldId,
     getData,
     updateIdOfSelectedField,
     handleChangeInFields,

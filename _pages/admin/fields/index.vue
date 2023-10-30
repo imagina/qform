@@ -79,6 +79,7 @@
             :key="key"
             :index="key + 1"
             :childFields="formData.blocks"
+            :copiedFieldId="copiedFieldId"
           />
         </article>
         <div class="list-blocks-skeleton" v-if="loadingSkeleton">
@@ -109,12 +110,12 @@
             :updatedBlockId="updatedBlockId"
           >
             <draggable 
-              @update="handleUpdatingFields" 
+              @update="handleUpdatingFields(null)" 
               @change="props => handleChangeInFields(props, block.id)"
               :list="block.fields"
               group="bocksfields"
               v-bind="dragOptions"
-              class="w-full draggable-fields"
+              class="w-full draggable-fields q-pb-md"
               :class="{
                 'drag-drog-field': block.fields.length === 0
               }"

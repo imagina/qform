@@ -32,7 +32,7 @@
         <!--Block Fields-->
         <div class="block-fields">
         <!--Fields Information-->
-            <div class="row justify-between items-center">
+            <div class="row justify-between items-center tw--mt-4 tw-mb-3">
                 <!--Title-->
                 <div class="box-title">
                     {{ $trp('isite.cms.label.field') }}
@@ -52,7 +52,7 @@
                     </q-tooltip>
                 </q-btn>
             </div>
-            <div class="q-py-md">
+            <div>
                 <q-scroll-area 
                     :thumb-style="thumbStyle" 
                     :content-active-style="contentActiveStyle"

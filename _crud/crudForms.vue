@@ -117,7 +117,7 @@ export default {
           },
           actions: [
             {
-              icon: "fa-light fa-clone",
+              icon: 'fa-light fa-diagram-subtask',
               action: this.createChildForm,
               color: 'info',
               label: this.$tr('isite.cms.label.createChildForm'),

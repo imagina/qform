@@ -64,6 +64,11 @@ export default {
       this.init()
     })
   },
+  updated(){
+    if(this.getIframeId){
+      this.setParentHeight()
+    }
+  },
   data() {
     return {
       loading: false,
@@ -73,6 +78,9 @@ export default {
   computed: {
     getFormId() {
       return this.$route.params.id || this.formId
+    },
+    getIframeId(){
+      return this.$route.query.iframeId || false
     },
     useCaptcha(){
       return this.$route.meta.useCaptcha || false
@@ -85,6 +93,14 @@ export default {
     },
     copyUrl(){
       this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
+    },
+    setParentHeight(){
+      window.parent.postMessage({
+        offsetHeight: document.body.offsetHeight,
+        clientHeight: document.body.clientHeight,
+        scrollHeight: document.body.scrollHeight,
+        formElementId: this.getIframeId
+      }, '*')
     }
   }
 }

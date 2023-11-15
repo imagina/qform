@@ -94,11 +94,11 @@ export default {
     copyUrl(){
       this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
     },
-    setParentHeight(frameId){
+    setParentHeight(){
       const message = {
-        offsetHeight: document.body.offsetHeight,
-        clientHeight: document.body.clientHeight,
-        scrollHeight: document.body.scrollHeight,
+        offsetHeight: parseInt(document.body.offsetHeight),
+        clientHeight: parseInt(document.body.clientHeight),
+        scrollHeight: parseInt(document.body.scrollHeight),
         formElementId: this.getIframeId
       }
       window.parent.postMessage(message, '*')

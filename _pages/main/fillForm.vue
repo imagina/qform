@@ -94,13 +94,14 @@ export default {
     copyUrl(){
       this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
     },
-    setParentHeight(){
-      window.parent.postMessage({
+    setParentHeight(frameId){
+      const message = {
         offsetHeight: document.body.offsetHeight,
         clientHeight: document.body.clientHeight,
         scrollHeight: document.body.scrollHeight,
         formElementId: this.getIframeId
-      }, '*')
+      }
+      window.parent.postMessage(message, '*')
     }
   }
 }

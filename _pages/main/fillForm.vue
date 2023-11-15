@@ -80,7 +80,7 @@ export default {
       return this.$route.params.id || this.formId
     },
     getIframeId(){
-      return this.$route.query.iframeId || false
+      return this.$route.query.formElementId || false
     },
     useCaptcha(){
       return this.$route.meta.useCaptcha || false

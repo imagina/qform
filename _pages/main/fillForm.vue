@@ -37,6 +37,7 @@
                 :send-to="{apiRoute: 'apiRoutes.qform.leads', extraData: { formId : getFormId}}"
                 withFeedBack
                 @obtainedForm="onObtainedForm"
+                :useCaptcha="useCaptcha"
               />
             </div>
           </div>
@@ -63,6 +64,11 @@ export default {
       this.init()
     })
   },
+  updated(){
+    if(this.getIframeId){
+      this.setParentHeight()
+    }
+  },
   data() {
     return {
       loading: false,
@@ -72,6 +78,12 @@ export default {
   computed: {
     getFormId() {
       return this.$route.params.id || this.formId
+    },
+    getIframeId(){
+      return this.$route.query.formElementId || false
+    },
+    useCaptcha(){
+      return this.$route.meta.useCaptcha || false
     }
   },
   methods: {
@@ -81,6 +93,15 @@ export default {
     },
     copyUrl(){
       this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
+    },
+    setParentHeight(frameId){
+      const message = {
+        offsetHeight: document.body.offsetHeight,
+        clientHeight: document.body.clientHeight,
+        scrollHeight: document.body.scrollHeight,
+        formElementId: this.getIframeId
+      }
+      window.parent.postMessage(message, '*')
     }
   }
 }

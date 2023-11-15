@@ -37,6 +37,7 @@
                 :send-to="{apiRoute: 'apiRoutes.qform.leads', extraData: { formId : getFormId}}"
                 withFeedBack
                 @obtainedForm="onObtainedForm"
+                :useCaptcha="useCaptcha"
               />
             </div>
           </div>
@@ -72,6 +73,9 @@ export default {
   computed: {
     getFormId() {
       return this.$route.params.id || this.formId
+    },
+    useCaptcha(){
+      return this.$route.meta.useCaptcha || false
     }
   },
   methods: {

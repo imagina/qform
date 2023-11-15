@@ -17,7 +17,7 @@ export default {
     }
   },
   fillFormPublic: {
-    permission: 'iforms.leads.create.public',
+    permission: null,
     activated: true,
     path: '/form/lead/create-public/:id',
     name: 'qform.main.leads.create.public',

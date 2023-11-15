@@ -139,12 +139,6 @@ export default {
               route: 'qform.main.leads.create',
               label: this.$tr('iforms.cms.fillForm'),
             },
-            {
-              icon: "fa-light fa-clipboard-list-check",
-              color: 'info',
-              route: 'qform.main.leads.create.public',
-              label: `${this.$tr('iforms.cms.fillForm')} (public)`,
-            },
           ]
         },
         update: {

@@ -19,7 +19,7 @@ export default {
   fillFormPublic: {
     permission: 'iforms.leads.create.public',
     activated: true,
-    path: '/form/lead/create_public/:id',
+    path: '/form/lead/create-public/:id',
     name: 'qform.main.leads.create.public',
     page: () => import('@imagina/qform/_pages/main/fillForm'),
     layout: () => import('@imagina/qsite/_layouts/blank.vue'),

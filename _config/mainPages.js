@@ -15,5 +15,21 @@ export default {
       refresh: true,
       breadcrumb: ['qform.forms']
     }
+  },
+  fillFormPublic: {
+    permission: 'iforms.leads.create.public',
+    activated: true,
+    path: '/form/lead/create_public/:id',
+    name: 'qform.main.leads.create.public',
+    page: () => import('@imagina/qform/_pages/main/fillForm'),
+    layout: () => import('@imagina/qsite/_layouts/blank.vue'),
+    title: 'iforms.cms.fillForm',
+    icon: 'fas fa-grip-horizontal',
+    authenticated: false,
+    useCaptcha: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb: ['qform.forms']
+    }
   }
 }

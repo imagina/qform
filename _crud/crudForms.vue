@@ -132,7 +132,19 @@ export default {
               action: (item) => this.$helper.copyToClipboard(item.embed, 'isite.cms.messages.copyToClipboard'),
               color: 'info',
               label: this.$trp('isite.cms.label.copyEmbedHtml'),
-            }
+            },
+            {
+              icon: "fa-light fa-clipboard-list-check",
+              color: 'info',
+              route: 'qform.main.leads.create',
+              label: this.$tr('iforms.cms.fillForm'),
+            },
+            {
+              icon: "fa-light fa-clipboard-list-check",
+              color: 'info',
+              route: 'qform.main.leads.create.public',
+              label: `${this.$tr('iforms.cms.fillForm')} (public)`,
+            },
           ]
         },
         update: {

@@ -64,11 +64,6 @@ export default {
       this.init()
     })
   },
-  updated(){
-    if(this.getIframeId){
-      this.setParentHeight()
-    }
-  },
   data() {
     return {
       loading: false,
@@ -90,18 +85,25 @@ export default {
     init() {},
     onObtainedForm(data){
       this.title = data.title ? data.title : ''
+      if(this.getIframeId){
+        this.setParentHeight()
+      }
     },
     copyUrl(){
       this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
     },
-    setParentHeight(frameId){
-      const message = {
-        offsetHeight: document.body.offsetHeight,
-        clientHeight: document.body.clientHeight,
-        scrollHeight: document.body.scrollHeight,
-        formElementId: this.getIframeId
-      }
-      window.parent.postMessage(message, '*')
+    setParentHeight(){
+      this.loading = true
+      setTimeout(() => {
+        const message = {
+          offsetHeight: document.body.offsetHeight,
+          clientHeight: document.body.clientHeight,
+          scrollHeight: document.body.scrollHeight,
+          formElementId: this.getIframeId
+        }
+        window.parent.postMessage(message, '*')
+        this.loading = false
+      }, 600)
     }
   }
 }

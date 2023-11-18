@@ -1,4 +1,8 @@
-<template></template>
+<template>
+  <share-link
+    ref="shareLinkComponent"
+  />
+</template>
 <script>
 export default {
   data() {
@@ -128,10 +132,10 @@ export default {
               },
             },
             {
-              icon: "fa-light fa-file-code",
-              action: (item) => this.$helper.copyToClipboard(item.embed, 'isite.cms.messages.copyToClipboard'),
+              icon: "fa-light fa-share-alt",
               color: 'info',
-              label: this.$trp('isite.cms.label.copyEmbedHtml'),
+              label: this.$tr('isite.cms.label.share'),
+              action: (item) => this.$refs.shareLinkComponent.openModal(item)
             },
             {
               icon: "fa-light fa-clipboard-list-check",

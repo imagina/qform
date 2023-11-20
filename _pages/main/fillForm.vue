@@ -18,12 +18,11 @@
                   <label id="formFillPageTitle">{{$tr('isite.cms.label.form')}} : {{ title }}</label>
                 </div>
                 <div class="col-1">
-                  <q-btn
-                    icon="fa-light fa-copy"
-                    @click="copyUrl"
-                    unelevated
-                    rounded
-                    no-caps
+                  <share-link
+                    v-if="formData"
+                    showIcon="true"
+                    :url="formData.url"
+                    :embed="formData.embed"
                   />
                 </div>
               </div>
@@ -68,6 +67,7 @@ export default {
     return {
       loading: false,
       title: '',
+      formData: false
     }
   },
   computed: {
@@ -85,6 +85,7 @@ export default {
     init() {},
     onObtainedForm(data){
       this.title = data.title ? data.title : ''
+      this.formData = data.url && data.embed ?  data : false
       if(this.getIframeId){
         this.setParentHeight()
       }

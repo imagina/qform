@@ -1,7 +1,4 @@
 <template>
-  <share-link
-    ref="shareLinkComponent"
-  />
 </template>
 <script>
 export default {
@@ -130,12 +127,6 @@ export default {
                   vIf: !form.parent
                 }
               },
-            },
-            {
-              icon: "fa-light fa-share-alt",
-              color: 'info',
-              label: this.$tr('isite.cms.label.share'),
-              action: (item) => this.$refs.shareLinkComponent.openModal(item)
             },
             {
               icon: "fa-light fa-clipboard-list-check",

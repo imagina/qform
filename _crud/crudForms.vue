@@ -99,7 +99,7 @@ export default {
 
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
-          requestParams: {include: 'user,parent'},
+          requestParams: {include: 'user,parent,qrs'},
           filters: {
             userId: {
               value: '0',

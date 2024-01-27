@@ -108,6 +108,18 @@ export default {
               requestParams: {include: 'parent'}
             }
           },
+          visibility: {
+            value: 'full',
+            type: 'select',
+            props: {
+              label: 'Visibilidad',
+              options: [
+                { label: 'Visible siempre', value: 'full' },
+                { label: 'Visible sólo en el administrador', value: 'internal' },
+                { label: 'Visible sólo en la Web', value: 'internalHidden' },
+              ]
+            },
+          },
           fieldOptions: {
             value: [],
             type: 'select',

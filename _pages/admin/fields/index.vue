@@ -50,7 +50,7 @@
             :extraActions="editAction"
             icon="fa-light fa-clipboard-list"
             :description="showDescription"
-            :documentation="showTooltip"
+            :help="showTooltip"
           />
         </div>
       </div>

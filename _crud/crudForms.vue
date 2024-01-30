@@ -152,6 +152,15 @@ export default {
               rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
             }
           },
+          description: {
+            name : "description",
+            value: '',
+            type: 'html',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.description')}`,
+            }
+          },
           active: {
             value: '1',
             type: 'select',
@@ -197,7 +206,7 @@ export default {
             props: {
               label: `${this.$tr('iforms.cms.form.urlTermsAndConditions')}`,
             }
-          }
+          },
         },
         formRight: {
           successText: {

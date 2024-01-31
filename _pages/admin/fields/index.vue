@@ -115,7 +115,13 @@
               :list="block.fields"
               group="bocksfields"
               v-bind="dragOptions"
-              class="w-full draggable-fields q-pb-md"
+              class="
+                tw-w-full 
+                tw-draggable-fields 
+                tw-q-pb-md 
+                tw-overflow-auto 
+                tw-h-56
+              "
               :class="{
                 'drag-drog-field': block.fields.length === 0
               }"

@@ -1,5 +1,4 @@
 import { reactive, toRefs } from "vue";
-import store from '@imagina/qsite/_components/v3/demo/store'
 
 export default function controller(props: any, emit: any) {
 
@@ -20,5 +19,5 @@ export default function controller(props: any, emit: any) {
     }
   }
 
-  return { ...(toRefs(state)), ...methods, store}
+  return { ...(toRefs(state)), ...methods }
 }

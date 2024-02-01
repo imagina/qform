@@ -91,7 +91,7 @@ export default {
       }
     },
     copyUrl(){
-      this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')      
+      this.$helper.copyToClipboard(window.location.href, 'isite.cms.messages.copyToClipboard')
     },
     setParentHeight(){
       this.loading = true
@@ -109,7 +109,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="sass">
 #formFillPageTitle
   font-size 20px
 </style>

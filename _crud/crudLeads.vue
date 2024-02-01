@@ -1,27 +1,27 @@
 <template>
-  <master-modal 
-    v-model="modal.show" 
-    @hide="resetModal()" 
+  <master-modal
+    v-model="modal.show"
+    @hide="resetModal()"
     :title="modal.lead ? modal.lead.form.title : ''"
   >
     <div class="box">
       <q-list separator dense>
-        <q-item 
-          v-for="(item, itemKey) in showLeadItems" 
-          :key="itemKey" 
+        <q-item
+          v-for="(item, itemKey) in showLeadItems"
+          :key="itemKey"
           style="padding: 8px 0"
         >
           <q-item-section>
-            <q-item-label 
+            <q-item-label
               v-if="item.fieldType != 'media'"
             >
               {{ item.label }}
             </q-item-label>
             <!--File preview-->
             <q-item-label v-if="item.fieldType == 'media'">
-              <file-list 
-                v-model="item.value" 
-                grid-col-class="col-12" 
+              <file-list
+                v-model="item.value"
+                grid-col-class="col-12"
                 hide-header
               />
             </q-item-label>
@@ -50,32 +50,32 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
 </style>
 <template>
-  <master-modal 
-    v-model="modal.show" 
-    @hide="resetModal()" 
+  <master-modal
+    v-model="modal.show"
+    @hide="resetModal()"
     :title="modal.lead ? modal.lead.form.title : ''"
   >
     <div class="box">
       <q-list separator dense>
-        <q-item 
-          v-for="(item, itemKey) in showLeadItems" 
-          :key="itemKey" 
+        <q-item
+          v-for="(item, itemKey) in showLeadItems"
+          :key="itemKey"
           style="padding: 8px 0"
         >
           <q-item-section>
-            <q-item-label 
+            <q-item-label
               v-if="item.fieldType != 'media'"
             >
               {{ item.label }}
             </q-item-label>
             <!--File preview-->
             <q-item-label v-if="item.fieldType == 'media'">
-              <file-list 
-                v-model="item.value" 
-                grid-col-class="col-12" 
+              <file-list
+                v-model="item.value"
+                grid-col-class="col-12"
                 hide-header
               />
             </q-item-label>
@@ -104,5 +104,5 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
 </style>

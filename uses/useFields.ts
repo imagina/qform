@@ -1,25 +1,25 @@
-import Vue, { 
-  ref, 
-  computed, 
-  watch, 
-  provide, 
-  onMounted, 
+import Vue, {
+  ref,
+  computed,
+  watch,
+  provide,
+  onMounted,
   nextTick,
   getCurrentInstance
 } from 'vue'
-import { 
-  getForm, 
-  createBlock, 
+import {
+  getForm,
+  createBlock,
   createField as createCopyField,
   updateBlock,
   updateField,
 } from '@imagina/qform/actions/manageForm'
 
-import { 
-  Element, 
-  Form, 
-  Field, 
-  CrudFields, 
+import {
+  Element,
+  Form,
+  Field,
+  CrudFields,
   CrudForm,
   CrudBlocks,
   DataSentBlockUpdate,
@@ -32,7 +32,7 @@ import VueRouter from 'vue-router'
 
 export default function useCrudLeads(attrs, props: any) {
   const loading = ref(false)
-  const proxy = (getCurrentInstance() as any).proxy as any
+  const proxy = getCurrentInstance()!.appContext.config.globalProperties
   const updatedBlockId = ref(null)
   const loadingSkeleton = ref(false)
   const crudFields = ref<null | CrudFields>(null)
@@ -45,9 +45,9 @@ export default function useCrudLeads(attrs, props: any) {
     action:() => {
       crudForm.value?.update(formData.value)
     },
-    label: Vue.prototype.$tr('iforms.cms.label.editForm'),
+    label: proxy.$tr('iforms.cms.label.editForm'),
     props: {
-      icon: 'fa fa-pencil', 
+      icon: 'fa fa-pencil',
       id: 'crudIndexViewAction'
     },
     vIf: true,
@@ -60,14 +60,14 @@ export default function useCrudLeads(attrs, props: any) {
     action:async () => {
       await crudForm.value?.delete(formData.value)
     },
-    label: Vue.prototype.$tr('isite.cms.label.delete'),
+    label: proxy.$tr('isite.cms.label.delete'),
     vIf: true,
   }])
   const tooltipInfo = ref({
-    title: Vue.prototype.$tr('iforms.cms.label.childForms'),
-    description: Vue.prototype.$tr('iforms.cms.message.tooltipInfoFormParent'),
+    title: proxy.$tr('iforms.cms.label.childForms'),
+    description: proxy.$tr('iforms.cms.message.tooltipInfoFormParent'),
     icon: 'fa-regular fa-list-tree',
-    class: 'q-ml-sm' 
+    class: 'q-ml-sm'
   })
   const dragOptions = ref({
     animation: 200,
@@ -105,7 +105,7 @@ export default function useCrudLeads(attrs, props: any) {
   const customCrudForm = computed(() => {
     return {
       update: {
-        title: Vue.prototype.$tr('iforms.cms.updateForm'),
+        title: proxy.$tr('iforms.cms.updateForm'),
         to: null
       }
     }
@@ -119,8 +119,8 @@ export default function useCrudLeads(attrs, props: any) {
           const blocks = formData.value.blocks
           if (typeForm == 'create') {
             //asigned sortOrder
-            data.sortOrder = blocks 
-              ? (blocks.length + 1) 
+            data.sortOrder = blocks
+              ? (blocks.length + 1)
               : 1
           }
           resolve(data)
@@ -146,10 +146,10 @@ export default function useCrudLeads(attrs, props: any) {
             data.formId = formId.value
             // Assigned order
             data.Order = formData.value.order
-              ? (formData.value.order.length + 1) 
+              ? (formData.value.order.length + 1)
               : POSITION
             // Set field name value
-            data.name = Vue.prototype.$helper.getSlug(
+            data.name = proxy.$helper.getSlug(
               data[proxy.$store.state.qsiteApp.defaultLocale].label
             )
           }
@@ -167,8 +167,8 @@ export default function useCrudLeads(attrs, props: any) {
 
   const showDescription = computed(() => {
     return isSon.value
-      ? Vue.prototype.$tr('iforms.cms.message.descriptionChildrenForm')
-      : Vue.prototype.$tr('iforms.cms.message.descriptionParentForm')
+      ? proxy.$tr('iforms.cms.message.descriptionChildrenForm')
+      : proxy.$tr('iforms.cms.message.descriptionParentForm')
   })
 
   const showTooltip = computed(() => {
@@ -193,7 +193,7 @@ export default function useCrudLeads(attrs, props: any) {
       loadingSkeleton.value = false
       softLoading.value = false
     } catch (err) {
-      Vue.prototype.$apiResponse.handleError(err, () => {
+      proxy.$apiResponse.handleError(err, () => {
         loadingSkeleton.value = false
         softLoading.value = false
       })
@@ -201,15 +201,15 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const errorMessage = () => {
-    Vue.prototype.$alert.error({
-      message: Vue.prototype.$tr('isite.cms.message.errorRequest'),
+    proxy.$alert.error({
+      message: proxy.$tr('isite.cms.message.errorRequest'),
       pos: 'bottom'
     })
   }
 
   const successMessage = () => {
-    Vue.prototype.$alert.success({
-      message: Vue.prototype.$tr('isite.cms.message.recordUpdated')
+    proxy.$alert.success({
+      message: proxy.$tr('isite.cms.message.recordUpdated')
     })
   }
 
@@ -219,7 +219,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const getDataFields = () => {
     const response: Array<DataSentFieldUpdate> = []
-    const formDataClone = Vue.prototype.$clone(formData.value)
+    const formDataClone = proxy.$clone(formData.value)
 
     formDataClone?.blocks.forEach(block => {
       if (block) {
@@ -286,7 +286,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const getDataBlock = () => {
     const response: Array<DataSentBlockUpdate> = []
-    const formDataClone = Vue.prototype.$clone(formData.value)
+    const formDataClone = proxy.$clone(formData.value)
     formDataClone?.blocks?.forEach(block => {
       if (block) {
         const sortOrder = response.length + 1
@@ -301,8 +301,8 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const updateOrderBlock = () => {
-    const data = { 
-      attributes: getDataBlock() 
+    const data = {
+      attributes: getDataBlock()
     }
 
     if (timerIdBlock.value) {
@@ -362,8 +362,9 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const redirect = async () => {
-    const router = new VueRouter()
-    router.back()
+    //[ptc]
+    //const router = new VueRouter()
+    //router.back()
   }
 
 

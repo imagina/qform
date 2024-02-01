@@ -1,9 +1,11 @@
-import Vue from 'vue'
+import {getCurrentInstance} from 'vue'
 
 export const customProps = () => {
+  const proxy = getCurrentInstance()!.appContext.config.globalProperties
+
   return {
     update: {
-      description: Vue.prototype.$tr('iforms.cms.message.fieldEditingModalbanner'),
+      description: proxy.$tr('iforms.cms.message.fieldEditingModalbanner'),
       customFormProps: {
         type: {
           props: {

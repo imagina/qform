@@ -1,16 +1,16 @@
 import Vue, { ref, computed, getCurrentInstance } from 'vue'
 
 export default function useCrudLeads() {
-    const crudId = Vue.prototype.$uid()
+  const proxy = getCurrentInstance().appContext.config.globalProperties
+    const crudId = proxy.$uid()
     const modal = ref({
       show: false,
       lead: false
     })
-    const tr = Vue.prototype.$tr
-    const trp = Vue.prototype.$trp
-    const trd = Vue.prototype.$trd
-    const clone = Vue.prototype.$clone
-    const proxy = getCurrentInstance().proxy
+    const tr = proxy.$tr
+    const trp = proxy.$trp
+    const trd = proxy.$trd
+    const clone = proxy.$clone
 
     const resetModal = () => {
       modal.value = {
@@ -30,9 +30,9 @@ export default function useCrudLeads() {
           columns: [
             { name: 'id', label: tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
-              name: 'formName', 
-              label: tr('iforms.cms.form.form'), 
-              field: 'form', 
+              name: 'formName',
+              label: tr('iforms.cms.form.form'),
+              field: 'form',
               align: 'left',
               format: val => val ? val.title : ''
             },

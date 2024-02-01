@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
 </style>
 <template>
   <master-modal
@@ -104,5 +104,5 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
 </style>

@@ -109,7 +109,7 @@ export default {
   }
 }
 </script>
-<style lang="sass">
+<style lang="scss">
 #formFillPageTitle
   font-size 20px
 </style>

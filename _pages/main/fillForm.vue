@@ -110,6 +110,7 @@ export default {
 }
 </script>
 <style lang="scss">
-#formFillPageTitle
-  font-size 20px
+#formFillPageTitle {
+  font-size: 20px;
+}
 </style>

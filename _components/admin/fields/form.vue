@@ -108,7 +108,7 @@ import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsFor
 
 //Plugins
 import _cloneDeep from 'lodash.clonedeep'
-import {required} from 'vuelidate/lib/validators'
+//[ptc]import {required} from 'vuelidate/lib/validators'
 import {scroll} from 'quasar'
 
 const {getScrollTarget, setScrollPosition} = scroll
@@ -170,13 +170,13 @@ export default {
           description: '',
         },
         validations: {
-          name: {required},
-          type: {required},
-          required: {required},
-          formId: {required},
-          label: {required},
-          placeholder: {required},
-          description: {required},
+          //[ptc]name: {required},
+          //[ptc]type: {required},
+          //[ptc]required: {required},
+          //[ptc]formId: {required},
+          //[ptc]label: {required},
+          //[ptc]placeholder: {required},
+          //[ptc]description: {required},
         },
       }
     },

@@ -1,4 +1,4 @@
-import { Form } from "@imagina/qform/contracts/form.contract";
+import { Form } from "modules/qform/contracts/form.contract";
 
 export interface FormRequestResponse {
     data: Form;

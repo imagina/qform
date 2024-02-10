@@ -1,33 +1,33 @@
 <template>
-    <q-btn 
-        class="absolute-top-right q-pa-sm" 
-        icon="fas fa-ellipsis-v" 
-        unelevated 
-        round 
+    <q-btn
+        class="absolute-top-right q-pa-sm"
+        icon="fas fa-ellipsis-v"
+        unelevated
+        round
         flat
         padding="sm"
         size="10px"
         color="blue-grey"
     >
         <!---Menu actions-->
-        <q-menu 
-            anchor="bottom left" 
+        <q-menu
+            anchor="bottom left"
             self="bottom end"
         >
             <q-list style="min-width: 100px">
-            <q-item 
-                clickable 
-                v-close-popup 
+            <q-item
+                clickable
+                v-close-popup
                 v-for="(actionBlock, itemKey) in actions"
-                :key="itemKey" 
+                :key="itemKey"
                 @click.native="actionBlock.action(block)"
             >
                 <q-item-section>
                     <div class="row items-center">
-                        <q-icon 
-                            :name="actionBlock.icon" 
-                            class="q-mr-sm" 
-                            color="blue-grey" 
+                        <q-icon
+                            :name="actionBlock.icon"
+                            class="q-mr-sm"
+                            color="blue-grey"
                             size="18px"
                         />
                         {{ actionBlock.label }}
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { fileActions } from '@imagina/qform/models'
+import { fileActions } from 'modules/qform/models'
 import { computed, ref, toRefs } from 'vue'
 
 export default {

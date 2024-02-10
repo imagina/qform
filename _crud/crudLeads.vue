@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import fileList from '@imagina/qsite/_components/master/fileList'
-import useCrudLeads from '@imagina/qform/uses/useCrudLeads'
+import fileList from 'modules/qsite/_components/master/fileList'
+import useCrudLeads from 'modules/qform/uses/useCrudLeads'
 
 export default {
   components: {

@@ -1,13 +1,13 @@
 import { computed, onMounted, ref, toRefs, watch, ComponentPublicInstance } from 'vue'
-import { PropsDropdownList } from '@imagina/qform/contracts'
+import { PropsDropdownList } from 'modules/qform/contracts'
 
 export default function useDropdownList({ props }) {
     const isUnfolded = ref(true)
-    const { 
-        index, 
-        block, 
-        childFields, 
-        copiedFieldId 
+    const {
+        index,
+        block,
+        childFields,
+        copiedFieldId
     } = toRefs<PropsDropdownList>(props);
     const dragOptions = ref({
         animation: 200,

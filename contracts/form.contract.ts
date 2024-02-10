@@ -1,4 +1,4 @@
-import { Block } from "@imagina/qform/contracts/block.contract";
+import { Block } from "modules/qform/contracts/block.contract";
 
 export interface Form {
     id?: number;

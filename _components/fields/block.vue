@@ -1,9 +1,9 @@
 <template>
-    <!-- The enable class is not used to style. In this 
-    case it is used because it is the way in which 
-    you activate or deactivate the draggable. 
+    <!-- The enable class is not used to style. In this
+    case it is used because it is the way in which
+    you activate or deactivate the draggable.
     See draggable prop of draggable -->
-    <div 
+    <div
         class="box block-container enable"
         :class="{
             'animation-loading': activateLoadingAnimation
@@ -22,7 +22,7 @@
         <!--Button action-->
         <dropdownMenu :block="block"/>
         <!--Block description-->
-        <div 
+        <div
             class="block-info-description text-grey-8 q-mt-xs col-12 ellipsis-3-lines"
         >
             {{ block.description }}
@@ -38,13 +38,13 @@
                     {{ $trp('isite.cms.label.field') }}
                 </div>
                 <!--Btn to create field-->
-                <q-btn 
-                    @click="createField(block.id)" 
+                <q-btn
+                    @click="createField(block.id)"
                     icon="fa-light fa-plus"
-                    color="primary" 
-                    padding="sm" 
+                    color="primary"
+                    padding="sm"
                     v-if="!isSon"
-                    size="10px" 
+                    size="10px"
                     rounded unelevated outline
                 >
                     <q-tooltip>
@@ -53,8 +53,8 @@
                 </q-btn>
             </div>
             <div>
-                <q-scroll-area 
-                    :thumb-style="thumbStyle" 
+                <q-scroll-area
+                    :thumb-style="thumbStyle"
                     :content-active-style="contentActiveStyle"
                     class="scroll-area"
                 >
@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import dropdownMenu from '@imagina/qform/_components/fields/dropdownMenu.vue'
-import useBlock from '@imagina/qform/uses/useBlock'
+import dropdownMenu from 'modules/qform/_components/fields/dropdownMenu.vue'
+import useBlock from 'modules/qform/uses/useBlock'
 
 export default {
     props: {
@@ -166,8 +166,8 @@ export default {
 }
 
 .scroll-area {
-    height: 230px; 
-    padding-bottom: 14px; 
+    height: 230px;
+    padding-bottom: 14px;
     box-sizing: border-box;
 }
 </style>

@@ -2,7 +2,7 @@
     <div
         :key="block.id"
     >
-        <button 
+        <button
             class="list-header"
             @click="onUnfolded"
         >
@@ -13,13 +13,13 @@
             v-show="isUnfolded"
             class="warn-empty-field text-blue-grey-5"
         >
-            <q-icon 
+            <q-icon
                 name="fa-thin fa-cube"
                 class="text-h3 text-weight-light"
             />
             <span>{{ $tr('iforms.cms.label.emptyBlock') }}</span>
         </div>
-        <draggable 
+        <draggable
             :list="block.fields"
             :group="{ name: 'bocksfields', pull: 'clone', put: false }"
             v-bind="dragOptions"
@@ -29,7 +29,7 @@
             draggable=".enable"
         >
             <div
-                v-for="field in block.fields" 
+                v-for="field in block.fields"
                 :key="field.id"
                 :id="field.id"
                 class="list-item blue-grey"
@@ -38,8 +38,8 @@
                     'disable': checkAssets(field.id)
                 }"
             >
-                <q-icon 
-                    name="fa-sharp fa-light fa-grip-dots-vertical" 
+                <q-icon
+                    name="fa-sharp fa-light fa-grip-dots-vertical"
                     class="icon-item q-mr-sm"
                 />
                 <span class="title-field">
@@ -52,7 +52,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import useDropdownList from '@imagina/qform/uses/useDropdownList'
+import useDropdownList from 'modules/qform/uses/useDropdownList'
 
 export default {
     props: {

@@ -102,7 +102,7 @@ export default function useCrudLeads() {
             type: 'crud',
             props: {
               crudType: 'select',
-              crudData: import('@imagina/quser/_crud/users'),
+              crudData: import('modules/quser/_crud/users'),
               crudProps: {
                 label: `${trp('isite.cms.form.assignedTo')}`,
               },

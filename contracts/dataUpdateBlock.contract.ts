@@ -1,4 +1,4 @@
-import { DataSentBlockUpdate } from "@imagina/qform/contracts/dataSentBlockUpdate.contract"
+import { DataSentBlockUpdate } from "modules/qform/contracts/dataSentBlockUpdate.contract"
 
 export interface DataUpdateBlock {
     attributes: DataSentBlockUpdate[]

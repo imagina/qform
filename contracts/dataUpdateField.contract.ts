@@ -1,4 +1,4 @@
-import { DataSentFieldUpdate } from "@imagina/qform/contracts/dataSentFieldUpdate.contract"
+import { DataSentFieldUpdate } from "modules/qform/contracts/dataSentFieldUpdate.contract"
 
 export interface DataUpdateField {
     attributes: DataSentFieldUpdate[]

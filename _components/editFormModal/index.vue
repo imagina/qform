@@ -13,8 +13,8 @@
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue'
-import controller from '@imagina/qform/_components/editFormModal/controller'
-import formCrud from '@imagina/qform/_pages/admin/fields/index.vue'
+import controller from 'modules/qform/_components/editFormModal/controller'
+import formCrud from 'modules/qform/_pages/admin/fields/index.vue'
 
 export default defineComponent({
   props: {},

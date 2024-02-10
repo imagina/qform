@@ -1,50 +1,50 @@
 <template>
-  <div 
-    id="formfieldsPage" 
+  <div
+    id="formfieldsPage"
     class="layout-padding"
   >
     <!--Blocks Crud-->
-    <crud 
-      :crud-data="import('@imagina/qform/_crud/blocks')" 
+    <crud
+      :crud-data="import('@imagina/qform/_crud/blocks')"
       :custom-data="customCrudBlocks" type="no-index"
-      ref="crudBlocks" 
-      @updated="getData(false)" 
-      @deleted="getData(false)" 
+      ref="crudBlocks"
+      @updated="getData(false)"
+      @deleted="getData(false)"
       @created="getData(false)"
     />
     <!--Fields Crud-->
-    <crud 
-      :crud-data="import('@imagina/qform/_crud/fields')" 
-      :custom-data="customCrudFields" 
+    <crud
+      :crud-data="import('@imagina/qform/_crud/fields')"
+      :custom-data="customCrudFields"
       type="no-index"
-      ref="crudFields" 
+      ref="crudFields"
       @updated="getData(false)"
       @deleted="getData(false)"
       @created="getData(false)"
     />
 
-    <crud 
-      :crud-data="import('@imagina/qform/_crud/crudForms.vue')" 
-      :custom-data="customCrudForm" 
+    <crud
+      :crud-data="import('@imagina/qform/_crud/crudForms.vue')"
+      :custom-data="customCrudForm"
       type="no-index"
       @deleted="redirect"
-      ref="crudForm" 
+      ref="crudForm"
     />
 
     <!--page Content-->
-    <div 
-      id="formfieldsPageContent" 
+    <div
+      id="formfieldsPageContent"
       class="row q-col-gutter-md relative-position"
     >
       <!--Form info-->
       <q-skeleton v-if="loadingSkeleton" width="100vw" height="70px" />
-      <div 
-        class="col-12" 
+      <div
+        class="col-12"
         v-if="formData && !loadingSkeleton"
       >
         <!--Page Actions-->
         <div class="box box-auto-height">
-          <page-actions 
+          <page-actions
             :title="`${$tr('isite.cms.label.form')}: ${formData.title}`"
             @refresh="getData"
             :extraActions="editAction"
@@ -61,7 +61,7 @@
           <router-link
             class="parent-list-header"
             v-if="!loadingSkeleton"
-            target="_blank" 
+            target="_blank"
             :to="`/form/fields/${parentForm.id}`"
           >
             <h2 class="blue-grey-9 text-h6 q-mr-md">
@@ -70,10 +70,10 @@
             <i class="fa-light fa-arrow-up-right-from-square"></i>
             <q-tooltip>
               {{ $tr('iforms.cms.label.openParentForm') }}
-            </q-tooltip>           
+            </q-tooltip>
           </router-link>
-          <dropdownList 
-            v-for="(block, key) in parentForm.blocks" 
+          <dropdownList
+            v-for="(block, key) in parentForm.blocks"
             v-if="!loadingSkeleton"
             :block="block"
             :key="key"
@@ -83,43 +83,43 @@
           />
         </article>
         <div class="list-blocks-skeleton" v-if="loadingSkeleton">
-          <q-skeleton 
-            v-for="skeleton in new Array(6)" 
-            :key="skeleton" 
-            width="100%" 
-            height="350px" 
+          <q-skeleton
+            v-for="skeleton in new Array(6)"
+            :key="skeleton"
+            width="100%"
+            height="350px"
           />
         </div>
         <draggable
           @change="updateOrderBlock"
           group="bocksBlocks"
-          v-bind="dragOptions" 
-          v-model="formData.blocks" 
+          v-bind="dragOptions"
+          v-model="formData.blocks"
           class="list-blocks"
           :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
           draggable=".enable"
         >
-          <block 
+          <block
             v-for="block in formData.blocks"
-            v-if="!loadingSkeleton" 
-            :key="block.id" 
+            v-if="!loadingSkeleton"
+            :key="block.id"
             :block="block"
             :isSon="isSon"
             @createField="createField"
             :softLoading="softLoading"
             :updatedBlockId="updatedBlockId"
           >
-            <draggable 
-              @update="handleUpdatingFields(null)" 
+            <draggable
+              @update="handleUpdatingFields(null)"
               @change="props => handleChangeInFields(props, block.id)"
               :list="block.fields"
               group="bocksfields"
               v-bind="dragOptions"
               class="
-                tw-w-full 
-                tw-draggable-fields 
-                tw-q-pb-md 
-                tw-overflow-auto 
+                tw-w-full
+                tw-draggable-fields
+                tw-q-pb-md
+                tw-overflow-auto
                 tw-h-56
               "
               :class="{
@@ -127,7 +127,7 @@
               }"
               :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
             >
-              <div 
+              <div
                 v-for="field in block.fields" :key="field.id"
                 class="items-center cursor-pointer"
               >
@@ -135,16 +135,16 @@
                 <div class="relative-position q-mb-sm">
                     <!--Field title-->
                     <div class="list-item-block text-grey-9">
-                      <q-icon 
-                        name="fa-sharp fa-light fa-grip-dots-vertical" 
+                      <q-icon
+                        name="fa-sharp fa-light fa-grip-dots-vertical"
                         class="q-mr-xs"
                       />
                       <span class="title-field">
                         {{ field.label || '--' }}
                       </span>
                     </div>
-                    <dropdownMenu 
-                      :block="field" 
+                    <dropdownMenu
+                      :block="field"
                       :is-field="true"
                       @updateIdOfSelectedField="updateIdOfSelectedField"
                     />
@@ -152,7 +152,7 @@
               </div>
             </draggable>
           </block>
-          <button 
+          <button
             class="btn-add-block"
             @click="handleCreateBlock"
             :disable="loading"
@@ -175,13 +175,13 @@
 
 <script>
 //import Component
-import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
-import formForm from '@imagina/qform/_components/admin/forms/form'
+import renderForm from 'modules/qform/_components/frontend/forms/renderForm'
+import formForm from 'modules/qform/_components/admin/forms/form'
 import draggable from 'vuedraggable'
-import block from '@imagina/qform/_components/fields/block'
-import dropdownList from '@imagina/qform/_components/fields/dropdownList'
-import dropdownMenu from '@imagina/qform/_components/fields/dropdownMenu.vue'
-import useFields from '@imagina/qform/uses/useFields.ts'
+import block from 'modules/qform/_components/fields/block'
+import dropdownList from 'modules/qform/_components/fields/dropdownList'
+import dropdownMenu from 'modules/qform/_components/fields/dropdownMenu.vue'
+import useFields from 'modules/qform/uses/useFields.ts'
 
 export default {
   components: {
@@ -267,7 +267,7 @@ export default {
 .list-blocks {
   display: grid;
   grid-template-columns: repeat(
-    auto-fit, 
+    auto-fit,
     minmax(300px, var(--max-size))
   );
   grid-template-rows: min-content;
@@ -277,7 +277,7 @@ export default {
 .list-blocks-skeleton {
   display: grid;
   grid-template-columns: repeat(
-    auto-fit, 
+    auto-fit,
     minmax(300px, 1fr)
   );
   grid-template-rows: min-content;
@@ -315,5 +315,5 @@ export default {
 .list-item-block:hover {
   background-color: #f5f5f5;
 }
-  
+
 </style>

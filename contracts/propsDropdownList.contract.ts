@@ -1,4 +1,4 @@
-import { Block } from "@imagina/qform/contracts/block.contract";
+import { Block } from "modules/qform/contracts/block.contract";
 
 export interface PropsDropdownList {
     index: number;

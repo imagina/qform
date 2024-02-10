@@ -13,7 +13,7 @@ import {
   createField as createCopyField,
   updateBlock,
   updateField,
-} from '@imagina/qform/actions/manageForm'
+} from 'modules/qform/actions/manageForm'
 
 import {
   Element,
@@ -24,9 +24,9 @@ import {
   CrudBlocks,
   DataSentBlockUpdate,
   DataSentFieldUpdate
-} from '@imagina/qform/contracts/'
+} from 'modules/qform/contracts/'
 
-import { dataForm, customProps } from '@imagina/qform/models'
+import { dataForm, customProps } from 'modules/qform/models'
 
 import VueRouter from 'vue-router'
 

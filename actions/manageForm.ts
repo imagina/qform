@@ -1,14 +1,14 @@
-import crud from '@imagina/qcrud/_services/baseService.js'
-import { 
-    FormRequestResponse, 
-    UpdateResponse, 
-    RequestParams, 
-    Field, 
+import crud from 'modules/qcrud/_services/baseService.js'
+import {
+    FormRequestResponse,
+    UpdateResponse,
+    RequestParams,
+    Field,
     Block,
     DataUpdateBlock,
-    DataUpdateField 
-} from '@imagina/qform/contracts/';
-import { dataForm, dataBlock, dataField } from '@imagina/qform/models';
+    DataUpdateField
+} from 'modules/qform/contracts/';
+import { dataForm, dataBlock, dataField } from 'modules/qform/models';
 
 const API_FORMS = 'apiRoutes.qform.forms'
 const API_BLOCKS = 'apiRoutes.qform.blocks'

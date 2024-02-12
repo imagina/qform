@@ -91,7 +91,7 @@
 </template>
 
 <script>
-  import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsForSelect'
+  import optionsForSelect from 'modules/qform/_components/admin/fields/optionsForSelect'
 
   //Plugins
   //[ptc]import {required} from 'vuelidate/lib/validators'

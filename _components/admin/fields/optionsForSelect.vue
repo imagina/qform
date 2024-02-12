@@ -10,7 +10,7 @@
         <q-input outlined dense v-model="item.name" placeholder="Name Option"/>
       </q-item-section>
       <q-item-section right>
-        <q-btn @click="remove(item)" icon="close" dense flat color="primary"/>
+        <q-btn @click="remove(item)" icon="fa fa-close" dense flat color="primary"/>
       </q-item-section>
     </q-item>
   </q-list>

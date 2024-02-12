@@ -5,7 +5,7 @@
   >
     <!--Blocks Crud-->
     <crud
-      :crud-data="import('@imagina/qform/_crud/blocks')"
+      :crud-data="import('modules/qform/_crud/blocks')"
       :custom-data="customCrudBlocks" type="no-index"
       ref="crudBlocks"
       @updated="getData(false)"
@@ -14,7 +14,7 @@
     />
     <!--Fields Crud-->
     <crud
-      :crud-data="import('@imagina/qform/_crud/fields')"
+      :crud-data="import('modules/qform/_crud/fields')"
       :custom-data="customCrudFields"
       type="no-index"
       ref="crudFields"
@@ -24,7 +24,7 @@
     />
 
     <crud
-      :crud-data="import('@imagina/qform/_crud/crudForms.vue')"
+      :crud-data="import('modules/qform/_crud/crudForms.vue')"
       :custom-data="customCrudForm"
       type="no-index"
       @deleted="redirect"

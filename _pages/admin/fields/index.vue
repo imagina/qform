@@ -98,60 +98,64 @@
           class="list-blocks"
           :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
           draggable=".enable"
+          item-key="name"
         >
-          <block
-            v-for="block in formData.blocks"
-            v-if="!loadingSkeleton"
-            :key="block.id"
-            :block="block"
-            :isSon="isSon"
-            @createField="createField"
-            :softLoading="softLoading"
-            :updatedBlockId="updatedBlockId"
-          >
-            <draggable
-              @update="handleUpdatingFields(null)"
-              @change="props => handleChangeInFields(props, block.id)"
-              :list="block.fields"
-              group="bocksfields"
-              v-bind="dragOptions"
-              class="
-                tw-w-full
-                tw-draggable-fields
-                tw-q-pb-md
-                tw-overflow-auto
-                tw-h-56
-              "
-              :class="{
-                'drag-drog-field': block.fields.length === 0
-              }"
-              :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
+          <template #item="{ block }">
+            <block
+              v-if="!loadingSkeleton"
+              :key="block.id"
+              :block="block"
+              :isSon="isSon"
+              @createField="createField"
+              :softLoading="softLoading"
+              :updatedBlockId="updatedBlockId"
             >
-              <div
-                v-for="field in block.fields" :key="field.id"
-                class="items-center cursor-pointer"
+              <draggable
+                @update="handleUpdatingFields(null)"
+                @change="props => handleChangeInFields(props, block.id)"
+                :list="block.fields"
+                group="bocksfields"
+                v-bind="dragOptions"
+                class="
+                  tw-w-full
+                  tw-draggable-fields
+                  tw-q-pb-md
+                  tw-overflow-auto
+                  tw-h-56
+                "
+                :class="{
+                  'drag-drog-field': block.fields.length === 0
+                }"
+                :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
               >
-                <!--Field-->
-                <div class="relative-position q-mb-sm">
-                    <!--Field title-->
-                    <div class="list-item-block text-grey-9">
-                      <q-icon
-                        name="fa-sharp fa-light fa-grip-dots-vertical"
-                        class="q-mr-xs"
-                      />
-                      <span class="title-field">
+                <template #item="{ field }">
+                  <div
+                    :key="field.id"
+                    class="items-center cursor-pointer"
+                  >
+                    <!--Field-->
+                    <div class="relative-position q-mb-sm">
+                      <!--Field title-->
+                      <div class="list-item-block text-grey-9">
+                        <q-icon
+                          name="fa-sharp fa-light fa-grip-dots-vertical"
+                          class="q-mr-xs"
+                        />
+                        <span class="title-field">
                         {{ field.label || '--' }}
                       </span>
+                      </div>
+                      <dropdownMenu
+                        :block="field"
+                        :is-field="true"
+                        @updateIdOfSelectedField="updateIdOfSelectedField"
+                      />
                     </div>
-                    <dropdownMenu
-                      :block="field"
-                      :is-field="true"
-                      @updateIdOfSelectedField="updateIdOfSelectedField"
-                    />
-                </div>
-              </div>
-            </draggable>
-          </block>
+                  </div>
+                </template>
+              </draggable>
+            </block>
+          </template>
           <button
             class="btn-add-block"
             @click="handleCreateBlock"

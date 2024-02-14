@@ -127,6 +127,7 @@
                   'drag-drog-field': block.fields.length === 0
                 }"
                 :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
+                item-key="name"
               >
                 <template #item="{ field }">
                   <div

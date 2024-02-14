@@ -27,25 +27,27 @@
             :sort="false"
             class="draggable-list"
             draggable=".enable"
+            item-key="name"
         >
+          <template #item="{ field }">
             <div
-                v-for="field in block.fields"
-                :key="field.id"
-                :id="field.id"
-                class="list-item blue-grey"
-                :class="{
+              :key="field.id"
+              :id="field.id"
+              class="list-item blue-grey"
+              :class="{
                     'enable' : !checkAssets(field.id),
                     'disable': checkAssets(field.id)
                 }"
             >
-                <q-icon
-                    name="fa-sharp fa-light fa-grip-dots-vertical"
-                    class="icon-item q-mr-sm"
-                />
-                <span class="title-field">
+              <q-icon
+                name="fa-sharp fa-light fa-grip-dots-vertical"
+                class="icon-item q-mr-sm"
+              />
+              <span class="title-field">
                     {{ field.label || '--'}}
                 </span>
             </div>
+          </template>
         </draggable>
     </div>
 </template>

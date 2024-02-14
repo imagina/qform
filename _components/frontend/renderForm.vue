@@ -92,9 +92,9 @@
       },
       //Create dynamic models of form
       createFormModels() {
-        this.$set(this.form, 'formId', this.formData.id)
+        this.form.formId = this.formData.id
         this.fields.forEach(item => {
-          this.$set(this.form, item.name, '')
+          this.form[item.name] = ''
         })
         this.success = true
       },

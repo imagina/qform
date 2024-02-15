@@ -1,15 +1,16 @@
-import Vue, { ref, computed, getCurrentInstance } from 'vue'
+import { ref, computed, getCurrentInstance } from 'vue'
+import { uid, i18n, globalStore } from 'src/plugins/utils';
+
+const { tr, trp, trd } = i18n.trans
+const { store } = globalStore.store
 
 export default function useCrudLeads() {
   const proxy = getCurrentInstance().appContext.config.globalProperties
-    const crudId = proxy.$uid()
+    const crudId = uid()
     const modal = ref({
       show: false,
       lead: false
     })
-    const tr = proxy.$tr
-    const trp = proxy.$trp
-    const trd = proxy.$trd
     const clone = proxy.$clone
 
     const resetModal = () => {
@@ -118,7 +119,7 @@ export default function useCrudLeads() {
     })
 
     const crudInfo = computed(() => {
-      return proxy.$store.state.qcrudComponent.component[crudId] || {}
+      return store.state.qcrudComponent.component[crudId] || {}
     })
 
     //Fields to show

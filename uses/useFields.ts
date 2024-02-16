@@ -29,8 +29,6 @@ import {
 import { dataForm, customProps } from 'modules/qform/models'
 import { i18n, globalStore, helper, alert } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
-
-const { tr } = i18n.trans
 const { store } = globalStore.store
 
 import VueRouter from 'vue-router'
@@ -50,7 +48,7 @@ export default function useCrudLeads(attrs, props: any) {
     action:() => {
       crudForm.value?.update(formData.value)
     },
-    label: tr('iforms.cms.label.editForm'),
+    label: i18n.tr('iforms.cms.label.editForm'),
     props: {
       icon: 'fa fa-pencil',
       id: 'crudIndexViewAction'
@@ -65,12 +63,12 @@ export default function useCrudLeads(attrs, props: any) {
     action:async () => {
       await crudForm.value?.delete(formData.value)
     },
-    label: tr('isite.cms.label.delete'),
+    label: i18n.tr('isite.cms.label.delete'),
     vIf: true,
   }])
   const tooltipInfo = ref({
-    title: tr('iforms.cms.label.childForms'),
-    description: tr('iforms.cms.message.tooltipInfoFormParent'),
+    title: i18n.tr('iforms.cms.label.childForms'),
+    description: i18n.tr('iforms.cms.message.tooltipInfoFormParent'),
     icon: 'fa-regular fa-list-tree',
     class: 'q-ml-sm'
   })
@@ -110,7 +108,7 @@ export default function useCrudLeads(attrs, props: any) {
   const customCrudForm = computed(() => {
     return {
       update: {
-        title: tr('iforms.cms.updateForm'),
+        title: i18n.tr('iforms.cms.updateForm'),
         to: null
       }
     }
@@ -172,8 +170,8 @@ export default function useCrudLeads(attrs, props: any) {
 
   const showDescription = computed(() => {
     return isSon.value
-      ? tr('iforms.cms.message.descriptionChildrenForm')
-      : tr('iforms.cms.message.descriptionParentForm')
+      ? i18n.tr('iforms.cms.message.descriptionChildrenForm')
+      : i18n.tr('iforms.cms.message.descriptionParentForm')
   })
 
   const showTooltip = computed(() => {
@@ -207,14 +205,14 @@ export default function useCrudLeads(attrs, props: any) {
 
   const errorMessage = () => {
     alert.error({
-      message: tr('isite.cms.message.errorRequest'),
+      message: i18n.tr('isite.cms.message.errorRequest'),
       pos: 'bottom'
     })
   }
 
   const successMessage = () => {
     alert.success({
-      message: tr('isite.cms.message.recordUpdated')
+      message: i18n.tr('isite.cms.message.recordUpdated')
     })
   }
 

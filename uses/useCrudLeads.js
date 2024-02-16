@@ -1,7 +1,5 @@
 import { ref, computed, getCurrentInstance } from 'vue'
 import { uid, i18n, globalStore } from 'src/plugins/utils';
-
-const { tr, trp, trd } = i18n.trans
 const { store } = globalStore.store
 
 export default function useCrudLeads() {
@@ -29,34 +27,34 @@ export default function useCrudLeads() {
         create: false,
         read: {
           columns: [
-            { name: 'id', label: tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            { name: 'id', label: i18n.tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
               name: 'formName',
-              label: tr('iforms.cms.form.form'),
+              label: i18n.tr('iforms.cms.form.form'),
               field: 'form',
               align: 'left',
               format: val => val ? val.title : ''
             },
             {
-              name: 'assignedTo', label: tr('isite.cms.form.assignedTo'), field: 'assignedTo', align: 'left',
+              name: 'assignedTo', label: i18n.tr('isite.cms.form.assignedTo'), field: 'assignedTo', align: 'left',
               format: val => val ? val.fullName : '-'
             },
             {
-              name: 'values', label: trp('isite.cms.label.data'), field: 'values', align: 'left',
+              name: 'values', label: i18n.trp('isite.cms.label.data'), field: 'values', align: 'left',
               classes: 'ellipsis', style: 'max-width : 350px',
               format: val => val ? Object.values(val).join(', ') : ''
             },
             {
-              name: 'createdAt', label: tr('isite.cms.form.createdAt'), field: 'createdAt',
-              format: val => val ? trd(val) : '-',
+              name: 'createdAt', label: i18n.tr('isite.cms.form.createdAt'), field: 'createdAt',
+              format: val => val ? i18n.trd(val) : '-',
               align: 'left', sortable: true
             },
             {
-              name: 'updatedAt', label: tr('isite.cms.form.updatedAt'), field: 'updatedAt',
-              format: val => val ? trd(val) : '-',
+              name: 'updatedAt', label: i18n.tr('isite.cms.form.updatedAt'), field: 'updatedAt',
+              format: val => val ? i18n.trd(val) : '-',
               align: 'left', sortable: true
             },
-            {name: 'actions', label: tr('isite.cms.form.actions'), align: 'right'},
+            {name: 'actions', label: i18n.tr('isite.cms.form.actions'), align: 'right'},
           ],
           requestParams: {
             include: 'form,assignedTo,files',
@@ -72,7 +70,7 @@ export default function useCrudLeads() {
               value: null,
               type: 'select',
               props: {
-                label: tr('iforms.cms.form.form'),
+                label: i18n.tr('iforms.cms.form.form'),
                 clearable: true,
               },
               loadOptions: {
@@ -86,7 +84,7 @@ export default function useCrudLeads() {
               name: 'viewLead',
               icon: 'fas fa-eye',
               color: 'info',
-              tooltip: tr('isite.cms.label.view'),
+              tooltip: i18n.tr('isite.cms.label.view'),
               action: (item) => {
                 modal.value.lead = item
                 modal.value.show = true
@@ -105,7 +103,7 @@ export default function useCrudLeads() {
               crudType: 'select',
               crudData: import('modules/quser/_crud/users'),
               crudProps: {
-                label: `${trp('isite.cms.form.assignedTo')}`,
+                label: `${i18n.trp('isite.cms.form.assignedTo')}`,
               },
               config: {
                 options: {

@@ -27,6 +27,11 @@ import {
 } from 'modules/qform/contracts/'
 
 import { dataForm, customProps } from 'modules/qform/models'
+import { i18n, globalStore, helper, alert } from 'src/plugins/utils'
+import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
+
+const { tr } = i18n.trans
+const { store } = globalStore.store
 
 import VueRouter from 'vue-router'
 
@@ -45,7 +50,7 @@ export default function useCrudLeads(attrs, props: any) {
     action:() => {
       crudForm.value?.update(formData.value)
     },
-    label: proxy.$tr('iforms.cms.label.editForm'),
+    label: tr('iforms.cms.label.editForm'),
     props: {
       icon: 'fa fa-pencil',
       id: 'crudIndexViewAction'
@@ -60,12 +65,12 @@ export default function useCrudLeads(attrs, props: any) {
     action:async () => {
       await crudForm.value?.delete(formData.value)
     },
-    label: proxy.$tr('isite.cms.label.delete'),
+    label: tr('isite.cms.label.delete'),
     vIf: true,
   }])
   const tooltipInfo = ref({
-    title: proxy.$tr('iforms.cms.label.childForms'),
-    description: proxy.$tr('iforms.cms.message.tooltipInfoFormParent'),
+    title: tr('iforms.cms.label.childForms'),
+    description: tr('iforms.cms.message.tooltipInfoFormParent'),
     icon: 'fa-regular fa-list-tree',
     class: 'q-ml-sm'
   })
@@ -105,7 +110,7 @@ export default function useCrudLeads(attrs, props: any) {
   const customCrudForm = computed(() => {
     return {
       update: {
-        title: proxy.$tr('iforms.cms.updateForm'),
+        title: tr('iforms.cms.updateForm'),
         to: null
       }
     }
@@ -149,8 +154,8 @@ export default function useCrudLeads(attrs, props: any) {
               ? (formData.value.order.length + 1)
               : POSITION
             // Set field name value
-            data.name = proxy.$helper.getSlug(
-              data[proxy.$store.state.qsiteApp.defaultLocale].label
+            data.name = helper.getSlug(
+              data[store.state.qsiteApp.defaultLocale].label
             )
           }
 
@@ -167,8 +172,8 @@ export default function useCrudLeads(attrs, props: any) {
 
   const showDescription = computed(() => {
     return isSon.value
-      ? proxy.$tr('iforms.cms.message.descriptionChildrenForm')
-      : proxy.$tr('iforms.cms.message.descriptionParentForm')
+      ? tr('iforms.cms.message.descriptionChildrenForm')
+      : tr('iforms.cms.message.descriptionParentForm')
   })
 
   const showTooltip = computed(() => {
@@ -193,7 +198,7 @@ export default function useCrudLeads(attrs, props: any) {
       loadingSkeleton.value = false
       softLoading.value = false
     } catch (err) {
-      proxy.$apiResponse.handleError(err, () => {
+      apiResponse.handleError(err, () => {
         loadingSkeleton.value = false
         softLoading.value = false
       })
@@ -201,15 +206,15 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const errorMessage = () => {
-    proxy.$alert.error({
-      message: proxy.$tr('isite.cms.message.errorRequest'),
+    alert.error({
+      message: tr('isite.cms.message.errorRequest'),
       pos: 'bottom'
     })
   }
 
   const successMessage = () => {
-    proxy.$alert.success({
-      message: proxy.$tr('isite.cms.message.recordUpdated')
+    alert.success({
+      message: tr('isite.cms.message.recordUpdated')
     })
   }
 

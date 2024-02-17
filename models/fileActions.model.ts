@@ -1,13 +1,13 @@
-import Vue, { computed, inject, getCurrentInstance } from 'vue'
+import { computed, inject } from 'vue'
+import { i18n } from 'src/plugins/utils'
 
 
 export const fileActions = (emit, isField, typeCrud) => {
-    const proxy = getCurrentInstance()!.appContext.config.globalProperties
     const refsCrud: any = inject('refs')
     return computed(() => {
         return [
             {
-                label: proxy.$tr('isite.cms.label.edit'),
+                label: i18n.tr('isite.cms.label.edit'),
                 icon: 'fas fa-pen',
                 color: 'green',
                 action: element => {
@@ -16,7 +16,7 @@ export const fileActions = (emit, isField, typeCrud) => {
                 }
             },
             {
-                label: proxy.$tr('isite.cms.label.delete'),
+                label: i18n.tr('isite.cms.label.delete'),
                 icon: 'fas fa-trash',
                 color: 'red',
                 action: element => {

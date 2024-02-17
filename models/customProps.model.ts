@@ -1,11 +1,9 @@
-import {getCurrentInstance} from 'vue'
+import { i18n } from 'src/plugins/utils'
 
 export const customProps = () => {
-  const proxy = getCurrentInstance()!.appContext.config.globalProperties
-
   return {
     update: {
-      description: proxy.$tr('iforms.cms.message.fieldEditingModalbanner'),
+      description: i18n.tr('iforms.cms.message.fieldEditingModalbanner'),
       customFormProps: {
         type: {
           props: {

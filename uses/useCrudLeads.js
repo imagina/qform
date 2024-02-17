@@ -1,6 +1,5 @@
 import { ref, computed, getCurrentInstance } from 'vue'
 import { uid, i18n, globalStore } from 'src/plugins/utils';
-const { store } = globalStore.store
 
 export default function useCrudLeads() {
   const proxy = getCurrentInstance().appContext.config.globalProperties
@@ -117,7 +116,7 @@ export default function useCrudLeads() {
     })
 
     const crudInfo = computed(() => {
-      return store.state.qcrudComponent.component[crudId] || {}
+      return globalStore.store.state.qcrudComponent.component[crudId] || {}
     })
 
     //Fields to show

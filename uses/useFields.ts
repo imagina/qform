@@ -27,9 +27,8 @@ import {
 } from 'modules/qform/contracts/'
 
 import { dataForm, customProps } from 'modules/qform/models'
-import { i18n, globalStore, helper, alert } from 'src/plugins/utils'
+import { i18n, store, helper, alert } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
-const { store } = globalStore.store
 
 import VueRouter from 'vue-router'
 

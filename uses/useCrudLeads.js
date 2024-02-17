@@ -1,6 +1,6 @@
 import { ref, computed, getCurrentInstance } from 'vue'
-import { uid, i18n, globalStore } from 'src/plugins/utils';
-const { store } = globalStore.store
+import { uid, i18n, store } from 'src/plugins/utils';
+
 
 export default function useCrudLeads() {
   const proxy = getCurrentInstance().appContext.config.globalProperties

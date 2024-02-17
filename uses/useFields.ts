@@ -27,7 +27,7 @@ import {
 } from 'modules/qform/contracts/'
 
 import { dataForm, customProps } from 'modules/qform/models'
-import { i18n, globalStore, helper, alert } from 'src/plugins/utils'
+import { i18n, store, helper, alert } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
 
 import VueRouter from 'vue-router'
@@ -152,7 +152,7 @@ export default function useCrudLeads(attrs, props: any) {
               : POSITION
             // Set field name value
             data.name = helper.getSlug(
-              data[globalStore.store.state.qsiteApp.defaultLocale].label
+              data[store.state.qsiteApp.defaultLocale].label
             )
           }
 

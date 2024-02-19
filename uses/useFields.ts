@@ -1,11 +1,10 @@
-import Vue, {
+import {
   ref,
   computed,
   watch,
   provide,
   onMounted,
-  nextTick,
-  getCurrentInstance
+  nextTick
 } from 'vue'
 import {
   getForm,
@@ -27,14 +26,13 @@ import {
 } from 'modules/qform/contracts/'
 
 import { dataForm, customProps } from 'modules/qform/models'
-import { i18n, store, helper, alert } from 'src/plugins/utils'
+import { i18n, store, helper, alert, clone } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
 
 import VueRouter from 'vue-router'
 
 export default function useCrudLeads(attrs, props: any) {
   const loading = ref(false)
-  const proxy = getCurrentInstance()!.appContext.config.globalProperties
   const updatedBlockId = ref(null)
   const loadingSkeleton = ref(false)
   const crudFields = ref<null | CrudFields>(null)
@@ -221,7 +219,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const getDataFields = () => {
     const response: Array<DataSentFieldUpdate> = []
-    const formDataClone = proxy.$clone(formData.value)
+    const formDataClone = clone(formData.value)
 
     formDataClone?.blocks.forEach(block => {
       if (block) {
@@ -288,7 +286,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const getDataBlock = () => {
     const response: Array<DataSentBlockUpdate> = []
-    const formDataClone = proxy.$clone(formData.value)
+    const formDataClone = clone(formData.value)
     formDataClone?.blocks?.forEach(block => {
       if (block) {
         const sortOrder = response.length + 1

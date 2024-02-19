@@ -1,15 +1,13 @@
-import { ref, computed, getCurrentInstance } from 'vue'
-import { uid, i18n, store } from 'src/plugins/utils';
+import { ref, computed } from 'vue'
+import { uid, i18n, store, clone } from 'src/plugins/utils';
 
 
 export default function useCrudLeads() {
-  const proxy = getCurrentInstance().appContext.config.globalProperties
     const crudId = uid()
     const modal = ref({
       show: false,
       lead: false
     })
-    const clone = proxy.$clone
 
     const resetModal = () => {
       modal.value = {

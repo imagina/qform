@@ -3,7 +3,7 @@
     class="q-mt-md">
     <q-item-section>
       Options
-      <q-btn @click="add()" icon="add" dense flat color="primary"/>
+      <q-btn @click="add()" icon="fa-light fa-plus" dense flat color="primary"/>
     </q-item-section>
     <q-item v-for="(item, index) in model.selectable" :key="index" :id="'optionSelect'+index">
       <q-item-section main>

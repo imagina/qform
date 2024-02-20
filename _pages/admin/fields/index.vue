@@ -72,15 +72,18 @@
               {{ $tr('iforms.cms.label.openParentForm') }}
             </q-tooltip>
           </router-link>
-          <dropdownList
+          <template
             v-for="(block, key) in parentForm.blocks"
-            v-if="!loadingSkeleton"
-            :block="block"
             :key="key"
-            :index="key + 1"
-            :childFields="formData.blocks"
-            :copiedFieldId="copiedFieldId"
-          />
+          >
+            <dropdownList
+              v-if="!loadingSkeleton"
+              :block="block"
+              :index="key + 1"
+              :childFields="formData.blocks"
+              :copiedFieldId="copiedFieldId"
+            />
+          </template>
         </article>
         <div class="list-blocks-skeleton" v-if="loadingSkeleton">
           <q-skeleton

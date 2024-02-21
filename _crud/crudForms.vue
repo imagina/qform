@@ -63,18 +63,18 @@ export default {
         read: {
           columns: [
             {
-              name: 'id', 
-              label: this.$tr('isite.cms.form.id'), 
-              field: 'id', 
-              style: 'width: 50px', 
-              align: 'left', 
+              name: 'id',
+              label: this.$tr('isite.cms.form.id'),
+              field: 'id',
+              style: 'width: 50px',
+              align: 'left',
             },
             {
-              name: 'title', 
-              label: this.$tr('isite.cms.form.title'), 
+              name: 'title',
+              label: this.$tr('isite.cms.form.title'),
               field: 'title', align: 'left',
-              action: (item) => { 
-                this.$router.replace({ path: `/form/fields/${item.id}/` }) 
+              action: (item) => {
+                this.$router.replace({ path: `/form/fields/${item.id}/` })
               }
             },
             {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'systemName', align: 'left'},
@@ -240,7 +240,7 @@ export default {
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',
               requestParams: {filter: {formId: this.crudInfo.id}},
-              select: {label: 'name', id: 'id'}
+              select: {label: 'label', id: 'id'}
             }
           },
           replyToName: {
@@ -254,7 +254,7 @@ export default {
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',
               requestParams: {filter: {formId: this.crudInfo.id}},
-              select: {label: 'name', id: 'id'}
+              select: {label: 'label', id: 'id'}
             }
           },
           parentId: {
@@ -273,7 +273,7 @@ export default {
                 }
               },
               select: {
-                label: 'title', 
+                label: 'title',
                 id: 'id'
               },
             }

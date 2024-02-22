@@ -27,16 +27,16 @@
             :sort="false"
             class="draggable-list"
             draggable=".enable"
-            item-key="name"
+            item-key="id"
         >
-          <template #item="{ field }">
+          <template #item="{ element }">
             <div
-              :key="field.id"
-              :id="field.id"
+              :key="element.id"
+              :id="element.id"
               class="list-item blue-grey"
               :class="{
-                    'enable' : !checkAssets(field.id),
-                    'disable': checkAssets(field.id)
+                    'enable' : !checkAssets(element.id),
+                    'disable': checkAssets(element.id)
                 }"
             >
               <q-icon
@@ -44,7 +44,7 @@
                 class="icon-item q-mr-sm"
               />
               <span class="title-field">
-                    {{ field.label || '--'}}
+                    {{ element.label || '--'}}
                 </span>
             </div>
           </template>

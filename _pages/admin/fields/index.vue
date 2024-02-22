@@ -101,13 +101,13 @@
           class="list-blocks"
           :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
           draggable=".enable"
-          item-key="name"
+          item-key="id"
         >
-          <template #item="{ block }">
+          <template #item="{ element }">
             <block
               v-if="!loadingSkeleton"
-              :key="block.id"
-              :block="block"
+              :key="element.id"
+              :block="element"
               :isSon="isSon"
               @createField="createField"
               :softLoading="softLoading"
@@ -115,8 +115,8 @@
             >
               <draggable
                 @update="handleUpdatingFields(null)"
-                @change="props => handleChangeInFields(props, block.id)"
-                :list="block.fields"
+                @change="props => handleChangeInFields(props, element.id)"
+                :list="element.fields"
                 group="bocksfields"
                 v-bind="dragOptions"
                 class="
@@ -127,10 +127,10 @@
                   tw-h-56
                 "
                 :class="{
-                  'drag-drog-field': block.fields.length === 0
+                  'drag-drog-field': element.fields.length === 0
                 }"
                 :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
-                item-key="name"
+                item-key="id"
               >
                 <template #item="{ field }">
                   <div

@@ -13,15 +13,15 @@
             <draggable
               @change="handleEvents"
               v-bind="dragOptions"
-              v-model="fields">
-              <transition-group class="list-group">
-                <div
-                  class="list-group-item"
-                  v-for="(field, index) in fields"
-                  :key="field.id">
-                  {{field.label}} (<small>{{field.typeName}}</small>)
+              v-model="fields"
+              item-key="id"
+              tag="transition-group"
+            >
+              <template #item="{ element }">
+                <div class="list-group-item">
+                  {{ element.label }} (<small>{{ element.typeName }}</small>)
                 </div>
-              </transition-group>
+              </template>
             </draggable>
           </div>
         </div>

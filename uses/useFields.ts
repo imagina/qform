@@ -266,9 +266,11 @@ export default function useCrudLeads(attrs, props: any) {
 
   }
 
-  const handleChangeInFields = async (props, idBlock) => {
-    const field: Field = props?.added?.element
-    updatedBlockId.value = idBlock
+  const handleChangeInFields = async (props, idBlock = null) => {
+    const field: Field = props?.added?.element || false
+    if(updatedBlockId?.value){
+      updatedBlockId.value = idBlock
+    }
     const differentFormId = formData.value?.id !== field?.formId
     if (
       field &&

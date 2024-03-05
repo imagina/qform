@@ -132,9 +132,10 @@
                 :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
                 item-key="id"
               >
-                <template #item="{ field }">
+                <template #item="{ element }">
                   <div
-                    :key="field.id"
+                    v-if="element"
+                    :key="element.id"
                     class="items-center cursor-pointer"
                   >
                     <!--Field-->
@@ -142,37 +143,40 @@
                       <!--Field title-->
                       <div class="list-item-block text-grey-9">
                         <q-icon
-                          name="fa-sharp fa-light fa-grip-dots-vertical"
+                          name="fa-light fa-grip-dots-vertical"
                           class="q-mr-xs"
                         />
                         <span class="title-field">
-                        {{ field.label || '--' }}
-                      </span>
+                          {{ element.label || '--' }}
+                        </span>
+                        <dropdownMenu
+                          class="q-mr-xs q-mt-xs"
+                          :block="element"
+                          :is-field="true"
+                          @updateIdOfSelectedField="updateIdOfSelectedField"
+                        />
                       </div>
-                      <dropdownMenu
-                        :block="field"
-                        :is-field="true"
-                        @updateIdOfSelectedField="updateIdOfSelectedField"
-                      />
                     </div>
                   </div>
                 </template>
               </draggable>
             </block>
           </template>
-          <button
-            class="btn-add-block"
-            @click="handleCreateBlock"
-            :disable="loading"
-            v-show="!loadingSkeleton"
-          >
-            <span class="text-h3">
-              <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
-            </span>
-            <span class="text-subtitle1 text-blue-grey-6" >
-              {{ $tr('iforms.cms.label.addNewBlock') }}
-            </span>
-          </button>
+          <template #footer>
+            <button
+              class="btn-add-block"
+              @click="handleCreateBlock"
+              :disable="loading"
+              v-show="!loadingSkeleton"
+            >
+              <span class="text-h3">
+                <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
+              </span>
+              <span class="text-subtitle1 text-blue-grey-6" >
+                {{ $tr('iforms.cms.label.addNewBlock') }}
+              </span>
+            </button>
+          </template>
         </draggable>
       </div>
       <!--Inner Loading-->

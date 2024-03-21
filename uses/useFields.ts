@@ -26,7 +26,7 @@ import {
 } from 'modules/qform/contracts/'
 
 import { dataForm, customProps } from 'modules/qform/models'
-import { i18n, store, helper, alert, clone } from 'src/plugins/utils'
+import { i18n, store, helper, alert, clone, router } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
 
 import VueRouter from 'vue-router'
@@ -364,9 +364,7 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const redirect = async () => {
-    //[ptc]
-    //const router = new VueRouter()
-    //router.back()
+    router.back()
   }
 
 

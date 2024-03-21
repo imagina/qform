@@ -108,7 +108,6 @@ import optionsForSelect from 'modules/qform/_components/admin/fields/optionsForS
 
 //Plugins
 import _cloneDeep from 'lodash.clonedeep'
-//[ptc]import {required} from 'vuelidate/lib/validators'
 import {scroll} from 'quasar'
 
 const {getScrollTarget, setScrollPosition} = scroll
@@ -168,15 +167,6 @@ export default {
           label: '',
           placeholder: '',
           description: '',
-        },
-        validations: {
-          //[ptc]name: {required},
-          //[ptc]type: {required},
-          //[ptc]required: {required},
-          //[ptc]formId: {required},
-          //[ptc]label: {required},
-          //[ptc]placeholder: {required},
-          //[ptc]description: {required},
         },
       }
     },

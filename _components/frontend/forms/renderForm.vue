@@ -118,7 +118,6 @@
 
 <script>
   import locations from 'modules/qform/_components/frontend/forms/locations'
-  //[ptc] import { required } from 'vuelidate/lib/validators'
   export default {
     props:{
       formId:{

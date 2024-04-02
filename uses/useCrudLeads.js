@@ -29,9 +29,9 @@ export default function useCrudLeads() {
             {
               name: 'formName',
               label: i18n.tr('iforms.cms.form.form'),
-              field: 'form',
+              field: row => row,
               align: 'left',
-              format: val => val ? val.title : ''
+              format: val => val.form ? val.form.title : i18n.trp('iforms.cms.form.formNotExist', { id: val.formId })
             },
             {
               name: 'assignedTo', label: i18n.tr('isite.cms.form.assignedTo'), field: 'assignedTo', align: 'left',

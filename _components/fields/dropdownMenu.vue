@@ -1,11 +1,8 @@
 <template>
     <q-btn
-        class="absolute-top-right q-pa-sm"
         icon="fas fa-ellipsis-v"
-        unelevated
         round
         flat
-        padding="sm"
         size="10px"
         color="blue-grey"
     >

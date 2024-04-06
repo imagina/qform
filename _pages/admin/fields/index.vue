@@ -56,7 +56,14 @@
       </div>
       <!--Blocks content (draggable)-->
       <div :class="{ 'content-dropdown col-12': isSon, 'col-12': !isSon }">
-        <article class="block-list-container q-pr-md" v-if="isSon">
+        <article 
+          class="
+            tw-mr-3.5
+            block-list-container 
+            box
+          " 
+            v-if="isSon"
+        >
           <q-skeleton v-if="loadingSkeleton" height="55vh" />
           <router-link
             class="parent-list-header"
@@ -64,10 +71,14 @@
             target="_blank"
             :to="`/form/fields/${parentForm.id}`"
           >
-            <h2 class="blue-grey-9 text-h6 q-mr-md">
+            <h2 class="blue-grey-9 tw-text-xl tw-mr-2 tw-font-medium">
               {{ parentForm.title }}
             </h2>
-            <i class="fa-light fa-arrow-up-right-from-square"></i>
+            <q-icon 
+              class="tw-text-gray-600"
+              name="fa-regular fa-arrow-up-right-from-square" 
+              size="12px" 
+            />
             <q-tooltip>
               {{ $tr('iforms.cms.label.openParentForm') }}
             </q-tooltip>
@@ -133,31 +144,41 @@
                 item-key="id"
               >
                 <template #item="{ element }">
-                  <div
+                  <section
                     v-if="element"
                     :key="element.id"
-                    class="items-center cursor-pointer"
+                    class="
+                      tw-cursor-pointer 
+                      tw-border 
+                      tw-border-solid 
+                      tw-border-gray-300
+                      tw-rounded-xl
+                      tw-p-2
+                      tw-flex
+                      tw-mb-2
+                      tw-justify-between 
+                      tw-items-center 
+                      tw-transform 
+                      hover:tw-bg-gray-100
+                      active:tw-cursor-grabbing
+                    "
                   >
-                    <!--Field-->
-                    <div class="relative-position q-mb-sm">
-                      <!--Field title-->
-                      <div class="list-item-block text-grey-9">
-                        <q-icon
-                          name="fa-light fa-grip-dots-vertical"
-                          class="q-mr-xs"
-                        />
-                        <span class="title-field">
-                          {{ element.label || '--' }}
-                        </span>
-                        <dropdownMenu
-                          class="q-mr-xs q-mt-xs"
-                          :block="element"
-                          :is-field="true"
-                          @updateIdOfSelectedField="updateIdOfSelectedField"
-                        />
-                      </div>
+                    <div>
+                      <q-icon
+                        name="fa-light fa-grip-dots-vertical"
+                        class="tw-mr-2"
+                      />
+                      <span class="title-field">
+                        {{ element.label || '--' }}
+                      </span>
                     </div>
-                  </div>
+                    <dropdownMenu
+                      class=""
+                      :block="element"
+                      :is-field="true"
+                      @updateIdOfSelectedField="updateIdOfSelectedField"
+                    />
+                  </section>
                 </template>
               </draggable>
             </block>
@@ -218,7 +239,7 @@ export default {
 
 <style scope>
 
-.block-list-container {
+.box block-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -283,7 +304,7 @@ export default {
     minmax(300px, var(--max-size))
   );
   grid-template-rows: min-content;
-  gap: 15px;
+  gap: 14px;
 }
 
 .list-blocks-skeleton {
@@ -307,25 +328,6 @@ export default {
   border: dashed 2px #cccccc;
   border-radius: 10px;
   margin: 0 auto;
-}
-
-.list-item-block {
-  display: flex;
-  align-items: center;
-  width: 97%;
-  box-sizing: border-box;
-  padding: 12px 8px;
-  border: solid #d8d8d8 1px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.list-item-block:active {
-  cursor: grabbing;
-}
-
-.list-item-block:hover {
-  background-color: #f5f5f5;
 }
 
 </style>

@@ -10,29 +10,32 @@
         }"
     >
         <!--Block info-->
-        <div class="block-info relative-position row justify-between items-center q-mb-md">
-        <!--Block Title-->
-        <div class="box-title col-12 q-py-sm q-pr-xl">
-            <div class="block-info-title ellipsis cursor-pointer">
-            <q-icon name="fa-solid fa-grip-dots-vertical"></q-icon>
-            {{ $tr('isite.cms.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
-            <q-tooltip>{{ block.title }}</q-tooltip>
+        <div class="tw-w-full tw-mb-8">
+            <!--Block Title-->
+            <div class="tw-flex tw-items-center tw-justify-between">
+                <div class="box-title col-12 q-py-sm q-pr-xl">
+                    <div class="block-info-title ellipsis cursor-pointer">
+                        <q-icon name="fa-solid fa-grip-dots-vertical"></q-icon>
+                        {{ $tr('isite.cms.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
+                        <q-tooltip>{{ block.title }}</q-tooltip>
+                    </div>
+                </div>
+                <!--Button action-->
+                <dropdownMenu :block="block"/>
             </div>
-        </div>
-        <!--Button action-->
-        <dropdownMenu :block="block"/>
-        <!--Block description-->
-        <div
-            class="block-info-description text-grey-8 q-mt-xs col-12 ellipsis-3-lines"
-        >
-            {{ block.description }}
-            <q-tooltip>{{ block.description }}</q-tooltip>
-        </div>
+            <!--Block description-->
+            <div
+                v-if="block.description"
+                class="block-info-description text-grey-8 q-mt-xs col-12 ellipsis-3-lines"
+            >
+                {{ block.description }}
+                <q-tooltip>{{ block.description }}</q-tooltip>
+            </div>
         </div>
         <!--Block Fields-->
         <div class="block-fields">
         <!--Fields Information-->
-            <div class="row justify-between items-center tw--mt-4 tw-mb-3">
+            <div class="row justify-between items-center tw-mt-4 tw-mb-3">
                 <!--Title-->
                 <div class="box-title">
                     {{ $trp('isite.cms.label.field') }}
@@ -167,7 +170,6 @@ export default {
 
 .scroll-area {
     height: 230px;
-    padding-bottom: 14px;
     box-sizing: border-box;
 }
 </style>

@@ -4,7 +4,7 @@
     you activate or deactivate the draggable.
     See draggable prop of draggable -->
     <div
-        class="box block-container enable"
+        class="box block-container"
         :class="{
             'animation-loading': activateLoadingAnimation
         }"
@@ -85,7 +85,8 @@ export default {
             default: false,
         },
         updatedBlockId: {
-            type: Number | Boolean,
+            type: [Number, null],
+            required: false,
             default: null
         }
     },
@@ -147,7 +148,7 @@ export default {
     height: 200%;
     background-repeat: no-repeat;
     background-position: 0 0;
-    background-image: conic-gradient(transparent, var(--q-color-primary), transparent 30%);
+    background-image: conic-gradient(transparent, var(--q-primary), transparent 30%);
     animation: rotate 4s linear infinite;
 }
 

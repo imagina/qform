@@ -105,83 +105,85 @@
           />
         </div>
         <draggable
+          v-if="formData && formData.blocks && formData.blocks.length > 0"
           @change="updateOrderBlock"
           group="bocksBlocks"
           v-bind="dragOptions"
-          v-model="formData.blocks"
+          :list="formData.blocks"
           class="list-blocks"
           :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
           draggable=".enable"
           item-key="id"
         >
           <template #item="{ element }">
-            <block
-              v-if="!loadingSkeleton"
-              :key="element.id"
-              :block="element"
-              :isSon="isSon"
-              @createField="createField"
-              :softLoading="softLoading"
-              :updatedBlockId="updatedBlockId"
-            >
-              <draggable
-                @update="handleUpdatingFields(null)"
-                @change="props => handleChangeInFields(props, element.id)"
-                :list="element.fields"
-                group="bocksfields"
-                v-bind="dragOptions"
-                class="
-                  tw-w-full
-                  tw-draggable-fields
-                  tw-q-pb-md
-                  tw-overflow-auto
-                  tw-h-56
-                "
-                :class="{
-                  'drag-drog-field': element.fields.length === 0
-                }"
-                :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
-                item-key="id"
+            <div class="enable">
+              <block
+                v-if="!loadingSkeleton"
+                :block="element"
+                :isSon="isSon"
+                @createField="createField"
+                :softLoading="softLoading"
+                :updatedBlockId="updatedBlockId"
               >
-                <template #item="{ element }">
-                  <section
-                    v-if="element"
-                    :key="element.id"
-                    class="
-                      tw-cursor-pointer 
-                      tw-border 
-                      tw-border-solid 
-                      tw-border-gray-300
-                      tw-rounded-xl
-                      tw-p-2
-                      tw-flex
-                      tw-mb-2
-                      tw-justify-between 
-                      tw-items-center 
-                      tw-transform 
-                      hover:tw-bg-gray-100
-                      active:tw-cursor-grabbing
-                    "
-                  >
-                    <div>
-                      <q-icon
-                        name="fa-light fa-grip-dots-vertical"
-                        class="tw-mr-2"
+                <draggable
+                  @update="handleUpdatingFields(null)"
+                  @change="props => handleChangeInFields(props, element.id)"
+                  :list="element.fields"
+                  group="bocksfields"
+                  v-bind="dragOptions"
+                  class="
+                    tw-w-full
+                    tw-draggable-fields
+                    tw-q-pb-md
+                    tw-overflow-auto
+                    tw-h-56
+                  "
+                  :class="{
+                    'drag-drog-field': element.fields.length === 0
+                  }"
+                  :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
+                  item-key="id"
+                >
+                  <template #item="{ element }">
+                    <section
+                      v-if="element"
+                      :key="element.id"
+                      class="
+                        tw-cursor-pointer 
+                        tw-border 
+                        tw-border-solid 
+                        tw-border-gray-300
+                        tw-rounded-xl
+                        tw-p-2
+                        tw-flex
+                        tw-mb-2
+                        tw-justify-between 
+                        tw-items-center 
+                        tw-transform 
+                        hover:tw-bg-gray-100
+                        active:tw-cursor-grabbing
+                      "
+                    >
+                      <div>
+                        <q-icon
+                          name="fa-light fa-grip-dots-vertical"
+                          class="tw-mr-2"
+                        />
+                        <span class="title-field">
+                          {{ element.label || '--' }}
+                        </span>
+                      </div>
+                      <dropdownMenu
+                        class=""
+                        :block="element"
+                        :is-field="true"
+                        @updateIdOfSelectedField="updateIdOfSelectedField"
                       />
-                      <span class="title-field">
-                        {{ element.label || '--' }}
-                      </span>
-                    </div>
-                    <dropdownMenu
-                      class=""
-                      :block="element"
-                      :is-field="true"
-                      @updateIdOfSelectedField="updateIdOfSelectedField"
-                    />
-                  </section>
-                </template>
-              </draggable>
-            </block>
+                    </section>
+                  </template>
+                </draggable>
+              </block>
+            </div>
           </template>
           <template #footer>
             <button

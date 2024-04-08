@@ -24,7 +24,6 @@ export default function useBlock({ props, emit }) {
 
         return {
             block,
-            updatedBlockId,
             thumbStyle,
             contentActiveStyle,
             isSon,

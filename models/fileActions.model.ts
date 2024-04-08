@@ -11,7 +11,7 @@ export const fileActions = (emit, isField, typeCrud) => {
                 icon: 'fas fa-pen',
                 color: 'green',
                 action: element => {
-                    if (refsCrud.value)
+                    if (refsCrud.value && element)
                         refsCrud.value[typeCrud.value].update(element)
                 }
             },
@@ -22,7 +22,7 @@ export const fileActions = (emit, isField, typeCrud) => {
                 action: element => {
                     const id = isField ? 'blockId' : 'id'
                     emit('updateIdOfSelectedField', element[id])
-                    if (refsCrud.value)
+                    if (refsCrud.value && element)
                         refsCrud.value[typeCrud.value].delete(element)
                 }
             }

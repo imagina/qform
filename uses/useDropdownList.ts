@@ -14,9 +14,6 @@ export default function useDropdownList({ props }) {
         disabled: false,
         ghostClass: "ghost"
     })
-    const onUnfolded = () => {
-        isUnfolded.value = !isUnfolded.value
-    }
     const idChildFields = ref<Array<number>>([])
 
     const extractId = () => {
@@ -69,7 +66,6 @@ export default function useDropdownList({ props }) {
         dragOptions,
         block,
         nameBlock,
-        onUnfolded,
         checkAssets
     }
 }

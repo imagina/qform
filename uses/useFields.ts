@@ -29,11 +29,9 @@ import { dataForm, customProps } from 'modules/qform/models'
 import { i18n, store, helper, alert, clone, router } from 'src/plugins/utils'
 import apiResponse from 'src/modules/qcrud/_plugins/apiResponse'
 
-import VueRouter from 'vue-router'
-
 export default function useCrudLeads(attrs, props: any) {
   const loading = ref(false)
-  const updatedBlockId = ref(null)
+  const updatedBlockId = ref<number | null>(null)
   const loadingSkeleton = ref(false)
   const crudFields = ref<null | CrudFields>(null)
   const formData = ref<Form>(dataForm);
@@ -214,7 +212,7 @@ export default function useCrudLeads(attrs, props: any) {
   }
 
   const updateIdOfSelectedField = id => {
-    updatedBlockId.value = id
+    if (id) updatedBlockId.value = id
   }
 
   const getDataFields = () => {
@@ -268,7 +266,7 @@ export default function useCrudLeads(attrs, props: any) {
 
   const handleChangeInFields = async (props, idBlock = null) => {
     const field: Field = props?.added?.element || false
-    if(updatedBlockId?.value){
+    if(idBlock) {
       updatedBlockId.value = idBlock
     }
     const differentFormId = formData.value?.id !== field?.formId

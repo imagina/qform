@@ -9,8 +9,8 @@ export default {
   },
   methods: {
     createChildForm(parent) {
-      const name = `${parent.title} (hijo)`
       const title = parent.title
+      const name = `${title} (hijo)`
       this.$alert.info({
         mode: 'modal',
         message: `${this.$tr('isite.cms.label.wantToCreateAChildForm', { title })}`,
@@ -22,7 +22,7 @@ export default {
           {
             label: this.$tr('isite.cms.label.create'),
             color: 'green',
-            promise: () => {
+            handler: async () => {
               return new Promise((resolve, reject) => {
                 const requestData = {
                   title: name,

@@ -1,54 +1,54 @@
 <template>
-    <div
+    <div 
         :key="block.id"
+        class="tw-mb-2"
     >
-        <button
-            class="list-header"
-            @click="onUnfolded"
+        <q-expansion-item
+            :label="nameBlock"
+            header-class="tw-bg-gray-100 tw-rounded-xl"
+            expand-icon-class="text-size-custom"
         >
-            {{ nameBlock }}
-        </button>
-        <div
-            v-if="block.fields.length === 0"
-            v-show="isUnfolded"
-            class="warn-empty-field text-blue-grey-5"
-        >
-            <q-icon
-                name="fa-thin fa-cube"
-                class="text-h3 text-weight-light"
-            />
-            <span>{{ $tr('iforms.cms.label.emptyBlock') }}</span>
-        </div>
-        <draggable
-            :list="block.fields"
-            :group="{ name: 'bocksfields', pull: 'clone', put: false }"
-            v-bind="dragOptions"
-            v-show="isUnfolded"
-            :sort="false"
-            class="draggable-list"
-            draggable=".enable"
-            item-key="id"
-        >
-          <template #item="{ element }">
             <div
-              :key="element.id"
-              :id="element.id"
-              class="list-item blue-grey"
-              :class="{
-                    'enable' : !checkAssets(element.id),
-                    'disable': checkAssets(element.id)
-                }"
+                v-if="block.fields.length === 0"
+                class="warn-empty-field text-blue-grey-5"
             >
-              <q-icon
-                name="fa-sharp fa-light fa-grip-dots-vertical"
-                class="icon-item q-mr-sm"
-              />
-              <span class="title-field">
-                    {{ element.label || '--'}}
-                </span>
+                <q-icon
+                    name="fa-thin fa-cube"
+                    class="text-h3 text-weight-light"
+                />
+                <span>{{ $tr('iforms.cms.label.emptyBlock') }}</span>
             </div>
-          </template>
-        </draggable>
+            <draggable
+                :list="block.fields"
+                :group="{ name: 'bocksfields', pull: 'clone', put: false }"
+                v-bind="dragOptions"
+                v-show="isUnfolded"
+                :sort="false"
+                class="draggable-list"
+                draggable=".enable"
+                item-key="id"
+            >
+              <template #item="{ element }">
+                <div
+                  :key="element.id"
+                  :id="element.id"
+                  class="list-item blue-grey"
+                  :class="{
+                        'enable' : !checkAssets(element.id),
+                        'disable': checkAssets(element.id)
+                    }"
+                >
+                    <q-icon
+                        name="fa-light fa-grip-dots-vertical"
+                        class="icon-item tw-mr-sm"
+                    />
+                    <span class="title-field">
+                        {{ element.label || '--'}}
+                    </span>
+                </div>
+              </template>
+            </draggable>
+        </q-expansion-item>
     </div>
 </template>
 
@@ -96,13 +96,6 @@ export default {
     font-size: 16px;
     font-weight: 500;
 }
-.list-header {
-    width: 100%;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    padding: 8px;
-    box-sizing: border-box;
-}
 
 .enable {
     color: #3b3b3b
@@ -122,16 +115,17 @@ export default {
 }
 
 .draggable-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     overflow: hidden;
     margin-top: 8px;
-    margin-left: 14px;
-    border-left: solid var(--q-color-primary) 2px;
+    margin-left: 16px;
 }
 
 .list-item {
     display: flex;
     align-items: center;
-    margin: 7px 14px;
     border: solid #d8d8d8 1px;
     padding: 12px 8px;
     border-radius: 10px;
@@ -149,6 +143,10 @@ export default {
 
 .list-item:active {
     cursor: grabbing;
+}
+
+.text-size-custom {
+  font-size: 14px !important;
 }
 
 </style>

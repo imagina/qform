@@ -104,7 +104,7 @@
             height="350px"
           />
         </div>
-        <section class="">
+        <section>
           <draggable
             v-if="showBlock"
             @change="updateOrderBlock"

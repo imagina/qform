@@ -177,6 +177,10 @@ export default function useCrudLeads(attrs, props: any) {
     return formData.value?.blocks?.length === 1
   })
 
+  const showBlock = computed(() => {
+    return formData?.value.blocks.length > 0
+  })
+
   const getData = async (activateLoadingSkeleton=true) => {
     loadingSkeleton.value = activateLoadingSkeleton
     softLoading.value = !activateLoadingSkeleton
@@ -389,6 +393,7 @@ export default function useCrudLeads(attrs, props: any) {
     showTooltip,
     isAutoWidth,
     copiedFieldId,
+    showBlock,
     getData,
     updateIdOfSelectedField,
     handleChangeInFields,

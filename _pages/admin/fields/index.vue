@@ -96,7 +96,7 @@
             />
           </template>
         </article>
-        <div class="list-blocks-skeleton" v-if="loadingSkeleton">
+        <div class="list-blocks" v-if="loadingSkeleton">
           <q-skeleton
             v-for="skeleton in new Array(6)"
             :key="skeleton"
@@ -104,103 +104,119 @@
             height="350px"
           />
         </div>
-        <draggable
-          v-if="formData && formData.blocks && formData.blocks.length > 0"
-          @change="updateOrderBlock"
-          group="bocksBlocks"
-          v-bind="dragOptions"
-          :list="formData.blocks"
-          class="list-blocks"
-          :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
-          draggable=".enable"
-          item-key="id"
-        >
-          <template #item="{ element }">
-            <div class="enable">
-              <block
-                v-if="!loadingSkeleton"
-                :block="element"
-                :isSon="isSon"
-                @createField="createField"
-                :softLoading="softLoading"
-                :updatedBlockId="updatedBlockId"
-              >
-                <draggable
-                  @update="handleUpdatingFields(null)"
-                  @change="props => handleChangeInFields(props, element.id)"
-                  :list="element.fields"
-                  group="bocksfields"
-                  v-bind="dragOptions"
-                  class="
-                    tw-w-full
-                    tw-draggable-fields
-                    tw-q-pb-md
-                    tw-overflow-auto
-                    tw-h-56
-                  "
-                  :class="{
-                    'drag-drog-field': element.fields.length === 0
-                  }"
-                  :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
-                  item-key="id"
+        <section>
+          <draggable
+            v-if="showBlock"
+            @change="updateOrderBlock"
+            group="bocksBlocks"
+            v-bind="dragOptions"
+            :list="formData.blocks"
+            class="list-blocks"
+            :style="{ '--max-size': isAutoWidth ? '400px' : '1fr'}"
+            draggable=".enable"
+            item-key="id"
+          >
+            <template #item="{ element }">
+              <div class="enable">
+                <block
+                  v-if="!loadingSkeleton"
+                  :block="element"
+                  :isSon="isSon"
+                  @createField="createField"
+                  :softLoading="softLoading"
+                  :updatedBlockId="updatedBlockId"
                 >
-                  <template #item="{ element }">
-                    <section
-                      v-if="element"
-                      :key="element.id"
-                      class="
-                        tw-cursor-pointer 
-                        tw-border 
-                        tw-border-solid 
-                        tw-border-gray-300
-                        tw-rounded-xl
-                        tw-p-2
-                        tw-flex
-                        tw-mb-2
-                        tw-justify-between 
-                        tw-items-center 
-                        tw-transform 
-                        hover:tw-bg-gray-100
-                        active:tw-cursor-grabbing
-                      "
-                    >
-                      <div>
-                        <q-icon
-                          name="fa-light fa-grip-dots-vertical"
-                          class="tw-mr-2"
+                  <draggable
+                    @update="handleUpdatingFields(null)"
+                    @change="props => handleChangeInFields(props, element.id)"
+                    :list="element.fields"
+                    group="bocksfields"
+                    v-bind="dragOptions"
+                    class="
+                      tw-w-full
+                      tw-draggable-fields
+                      tw-q-pb-md
+                      tw-overflow-auto
+                      tw-h-56
+                    "
+                    :class="{
+                      'drag-drog-field': element.fields.length === 0
+                    }"
+                    :data-descr="$tr('iforms.cms.label.dragFieldsHere')"
+                    item-key="id"
+                  >
+                    <template #item="{ element }">
+                      <section
+                        v-if="element"
+                        :key="element.id"
+                        class="
+                          tw-cursor-pointer 
+                          tw-border 
+                          tw-border-solid 
+                          tw-border-gray-300
+                          tw-rounded-xl
+                          tw-p-2
+                          tw-flex
+                          tw-mb-2
+                          tw-justify-between 
+                          tw-items-center 
+                          tw-transform 
+                          hover:tw-bg-gray-100
+                          active:tw-cursor-grabbing
+                        "
+                      >
+                        <div>
+                          <q-icon
+                            name="fa-light fa-grip-dots-vertical"
+                            class="tw-mr-2"
+                          />
+                          <span class="title-field">
+                            {{ element.label || '--' }}
+                          </span>
+                        </div>
+                        <dropdownMenu
+                          class=""
+                          :block="element"
+                          :is-field="true"
+                          @updateIdOfSelectedField="updateIdOfSelectedField"
                         />
-                        <span class="title-field">
-                          {{ element.label || '--' }}
-                        </span>
-                      </div>
-                      <dropdownMenu
-                        class=""
-                        :block="element"
-                        :is-field="true"
-                        @updateIdOfSelectedField="updateIdOfSelectedField"
-                      />
-                    </section>
-                  </template>
-                </draggable>
-              </block>
-            </div>
-          </template>
-          <template #footer>
-            <button
-              class="btn-add-block"
-              @click="handleCreateBlock"
-              :disable="loading"
-              v-show="!loadingSkeleton"
-            >
-              <span class="text-h3">
-                <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
-              </span>
-              <span class="text-subtitle1 text-blue-grey-6" >
-                {{ $tr('iforms.cms.label.addNewBlock') }}
-              </span>
-            </button>
-          </template>
-        </draggable>
+                      </section>
+                    </template>
+                  </draggable>
+                </block>
+              </div>
+            </template>
+            <template #footer>
+              <button
+                class="btn-add-block"
+                @click="handleCreateBlock"
+                :disable="loading"
+                v-show="!loadingSkeleton"
+              >
+                <span class="text-h3">
+                  <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
+                </span>
+                <span class="text-subtitle1 text-blue-grey-6">
+                  {{ $tr('iforms.cms.label.addNewBlock') }}
+                </span>
+              </button>
+            </template>
+          </draggable>
+          <button
+            class="btn-add-block tw-max-w-80"
+            @click="handleCreateBlock"
+            :disable="loading"
+            v-show="!loadingSkeleton"
+            v-if="!showBlock"
+          >
+            <span class="text-h3">
+              <i class="fa fa-plus text-blue-grey-6" aria-hidden="true" />
+            </span>
+            <span class="text-subtitle1 text-blue-grey-6">
+              {{ $tr('iforms.cms.label.addNewBlock') }}
+            </span>
+          </button>
+        </section>
       </div>
       <!--Inner Loading-->
       <inner-loading :visible="loading"/>
@@ -309,27 +325,15 @@ export default {
   gap: 14px;
 }
 
-.list-blocks-skeleton {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(300px, 1fr)
-  );
-  grid-template-rows: min-content;
-  gap: 15px;
-}
-
 .btn-add-block {
   display: flex;
   place-content: center;
   place-items: center;
   flex-direction: column;
   width: 100%;
-  max-width: 370px;
   height: 370px;
   border: dashed 2px #cccccc;
   border-radius: 10px;
-  margin: 0 auto;
 }
 
 </style>

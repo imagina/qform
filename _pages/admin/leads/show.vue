@@ -5,7 +5,7 @@
         <q-table
           class="box-table"
           :title="form.title"
-          :data="table.data"
+          :rows="table.data"
           :columns="table.columns"
           row-key="name">
           <template slot="top">

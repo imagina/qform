@@ -94,7 +94,7 @@ export default function useCrudLeads() {
           ]
         },
         update: true,
-        delete: false,
+        delete: true,
         formLeft: {
           id: {value: ''},
           assignedToId: {

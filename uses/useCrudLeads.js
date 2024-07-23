@@ -136,7 +136,11 @@ export default function useCrudLeads() {
           //get field value
           const fieldValue = leadValues[field.name] || '-'
           //Get field file
-          const fieldFile = (fieldType != 'media') ? null : files.find(item => item.zone == fieldValue.split('/').pop())
+          const fieldFile = (fieldType != 'media') ? null : files.find(item => {
+            const fieldPath = fieldValue ? fieldValue.split('?')[0] : '';
+
+            return item.zone == fieldPath.split('/').pop()
+          })
 
           //Add extra data to field
           response.push({
@@ -146,6 +150,7 @@ export default function useCrudLeads() {
               id: crudId,
               ...fieldFile,
               path: fieldValue,
+              url: fieldValue,
               mediumThumb: fieldValue,
               filename: field.label,
             }],

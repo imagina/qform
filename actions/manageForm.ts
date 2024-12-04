@@ -63,7 +63,7 @@ export const updateBlock = async ({ data }: { data: DataUpdateBlock }): Promise<
 
 export const updateField = async ({ data }: { data: DataUpdateField }): Promise<UpdateResponse> => {
     try {
-        return await crud.put(API_FIELDS, data)
+        return await crud.post(API_FIELDS, data)
     } catch(err) {
         console.log(err);
         return { data: '' }

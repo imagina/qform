@@ -9,7 +9,7 @@ export default {
   fields : `${urlBase}/fields`,
   leads : `${urlBase}/leads`,
   types : `${urlBase}/types`,
-  formFields : `${urlBase}/forms/fields`,
+  formFields : `${urlBase}/fields/updateOrders`,
   blocks : `${urlBase}/blocks`,
   formBlocks : `${urlBase}/forms/blocks`,
 }

@@ -102,7 +102,7 @@ export default {
           requestParams: {include: 'user,parent,qrs'},
           filters: {
             userId: {
-              value: '0',
+              value: null,
               type: 'select',
               props: {
                 label: this.$tr('isite.cms.label.user'),

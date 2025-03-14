@@ -41,6 +41,7 @@ export default {
         },
         update: {
           title: this.$tr('iforms.cms.updateField'),
+          requestParams: {include: 'fields'}
         },
         delete: true,
         formLeft: {
@@ -123,7 +124,7 @@ export default {
           fieldOptions: {
             value: [],
             type: 'select',
-            isFakeField: true,
+            isTranslatable: true,
             props: {
               label: this.$trp('isite.cms.form.option'),
               useInput: true,

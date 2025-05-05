@@ -125,7 +125,6 @@ export default function useCrudLeads() {
       if (modal.value.lead) {
         const leadValues = clone(modal.value.lead.values || [])
         const files = clone(modal.value.lead.files)
-
         //Merge values
         clone(modal.value.lead.form.fields).forEach(field => {
           //get field type
@@ -133,8 +132,7 @@ export default function useCrudLeads() {
           //get field value
           const fieldValue = leadValues[field.name] || '-'
           //Get field file
-          const fieldFile = (fieldType != 'media') ? null : files.find(item => item.zone == fieldValue.split('/').pop())
-
+          const fieldFile = (fieldType != 'media') ? null : files.find(item => fieldValue.includes(item.zone))
           //Add extra data to field
           response.push({
             ...field,
@@ -143,8 +141,9 @@ export default function useCrudLeads() {
               id: crudId,
               ...fieldFile,
               path: fieldValue,
+              url: fieldValue,
               mediumThumb: fieldValue,
-              filename: field.label,
+              filename: field.label
             }],
             fieldType: fieldType
           })

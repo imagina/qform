@@ -20,7 +20,7 @@ export default function useCrudLeads() {
         crudId,
         entityName: config("main.qform.entityNames.lead"),
         apiRoute: 'apiRoutes.qform.leads',
-        permission: 'iforms.leads',
+        permission: 'iform.leads',
         extraFormFields: 'iforms.crud-fields.leads',
         create: false,
         read: {

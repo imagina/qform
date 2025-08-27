@@ -15,7 +15,7 @@ export default {
         crudId: this.crudId,
         entityName: config("main.qform.entityNames.field"),
         apiRoute: 'apiRoutes.qform.fields',
-        permission: 'iforms.fields',
+        permission: 'iform.fields',
         extraFormFields: 'iforms.crud-fields.fields',
         create: {
           title: this.$tr('iforms.cms.newField'),

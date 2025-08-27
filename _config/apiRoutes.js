@@ -1,5 +1,5 @@
 const moduleName = 'iform';
-const moduleVersion = 'v4';
+const moduleVersion = 'v1';
 const urlBase = `/${moduleName}/${moduleVersion}`
 
 export default {

@@ -1,6 +1,6 @@
 export default {
   forms: {
-    permission: 'iforms.forms.manage',
+    permission: 'iform.forms.manage',
     activated: true,
     path: '/form/form',
     name: 'qform.admin.form.index',
@@ -26,7 +26,7 @@ export default {
     authenticated: true
   },
   fields: {
-    permission: 'iforms.fields.manage',
+    permission: 'iform.fields.manage',
     activated: true,
     path: '/form/fields/:id',
     name: 'qform.admin.fields.index',
@@ -69,7 +69,7 @@ export default {
     }
   },
   leads: {
-    permission: 'iforms.leads.manage',
+    permission: 'iform.leads.manage',
     activated: true,
     path: '/form/lead',
     name: 'qform.admin.leads.index',

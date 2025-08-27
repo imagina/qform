@@ -14,7 +14,7 @@ const API_FORMS = 'apiRoutes.qform.forms'
 const API_BLOCKS = 'apiRoutes.qform.blocks'
 const API_CREATE_FIELDS = 'apiRoutes.qform.fields'
 const API_FIELDS = 'apiRoutes.qform.formFields'
-const PARAMS_INCLUDE = 'blocks.fields';
+const PARAMS_INCLUDE = 'blocks.fields,translations';
 
 export const getForm = async (id, refresh = false): Promise<FormRequestResponse> => {
     const requestParams: RequestParams = {

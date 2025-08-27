@@ -11,5 +11,6 @@ export default {
   types : `${urlBase}/types`,
   formFields : `${urlBase}/fields/updateOrders`,
   blocks : `${urlBase}/blocks`,
+  blocksOrder : `${urlBase}/blocks/bulk/order`,
   formBlocks : `${urlBase}/forms/blocks`,
 }

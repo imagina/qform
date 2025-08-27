@@ -12,9 +12,10 @@ import { dataForm, dataBlock, dataField } from 'modules/qform/models';
 
 const API_FORMS = 'apiRoutes.qform.forms'
 const API_BLOCKS = 'apiRoutes.qform.blocks'
+const API_BLOCKS_ORDER = 'apiRoutes.qform.blocksOrder'
 const API_CREATE_FIELDS = 'apiRoutes.qform.fields'
 const API_FIELDS = 'apiRoutes.qform.formFields'
-const PARAMS_INCLUDE = 'blocks.fields,translations';
+const PARAMS_INCLUDE = 'blocks.fields,blocks.translations,translations';
 
 export const getForm = async (id, refresh = false): Promise<FormRequestResponse> => {
     const requestParams: RequestParams = {
@@ -51,10 +52,9 @@ export const createField = async (data): Promise<Field> => {
 }
 
 export const updateBlock = async ({ data }: { data: DataUpdateBlock }): Promise<UpdateResponse> => {
-    const ROUTE_REFERENCE = 'apiRoutes.qform.formBlocks'
 
     try {
-        return await crud.put(ROUTE_REFERENCE, data)
+        return await crud.put(API_BLOCKS_ORDER, data)
     } catch (err) {
         console.log(err);
         return { data: '' }

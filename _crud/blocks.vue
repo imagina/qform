@@ -55,6 +55,7 @@ export default {
         },
         update: {
           title: this.$tr('iforms.cms.updateBlock'),
+          requestParams: {include: 'translations'},
         },
         delete: {
           title: this.$tr('iforms.cms.deleteBlock'),

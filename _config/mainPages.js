@@ -2,7 +2,7 @@ import appConfig from 'src/setup/app'
 
 export default {
   fillForm: {
-    permission: 'iforms.leads.create',
+    permission: 'iform.leads.create',
     activated: true,
     path: '/form/lead/create/:id',
     name: 'qform.main.leads.create',

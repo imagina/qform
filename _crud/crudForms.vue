@@ -55,7 +55,7 @@ export default {
         crudId: this.crudId,
         entityName: config("main.qform.entityNames.form"),
         apiRoute: 'apiRoutes.qform.forms',
-        permission: 'iforms.forms',
+        permission: 'iform.forms',
         extraFormFields: 'iforms.crud-fields.forms',
         create: {
           title: this.$tr('iforms.cms.newForm'),
@@ -99,7 +99,7 @@ export default {
 
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
-          requestParams: {include: 'user,parent,qrs'},
+          requestParams: {include: 'user,parent,qrs,translations'},
           filters: {
             userId: {
               value: null,
@@ -139,6 +139,7 @@ export default {
         update: {
           title: this.$tr('iforms.cms.updateForm'),
           to:  'qform.admin.fields.index',
+          requestParams: {include: 'translations'}
         },
         delete: true,
         formLeft: {
@@ -240,7 +241,7 @@ export default {
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',
               requestParams: {filter: {formId: this.crudInfo.id}},
-              select: {label: 'name', id: 'id'}
+              select: {label: 'label', id: 'id'}
             }
           },
           replyToName: {
@@ -254,7 +255,7 @@ export default {
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',
               requestParams: {filter: {formId: this.crudInfo.id}},
-              select: {label: 'name', id: 'id'}
+              select: {label: 'label', id: 'id'}
             }
           },
           parentId: {

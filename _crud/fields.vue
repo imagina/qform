@@ -105,7 +105,7 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qform.types',
-              select: {label: 'name', id: 'id'},
+              select: {label: 'title', id: 'id'},
               requestParams: {include: 'parent'}
             }
           },

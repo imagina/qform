@@ -97,7 +97,7 @@ export default {
               ],
             },
           },
-          type: {
+          typeId: {
             value: 1,
             type: 'select',
             props: {

@@ -29,9 +29,9 @@ export default function useCrudLeads() {
             {
               name: 'formName',
               label: i18n.tr('iforms.cms.form.form'),
-              field: row => row,
+              field: 'form',
               align: 'left',
-              format: val => val.form ? val.form.title : i18n.trp('iforms.cms.form.formNotExist', { id: val.formId })
+              format: val => val.title
             },
             {
               name: 'assignedTo', label: i18n.tr('isite.cms.form.assignedTo'), field: 'assignedTo', align: 'left',
@@ -55,7 +55,7 @@ export default function useCrudLeads() {
             {name: 'actions', label: i18n.tr('isite.cms.form.actions'), align: 'right'},
           ],
           requestParams: {
-            include: 'form,assignedTo,files',
+            include: 'form.translations,assignedTo,files,form.fields',
             filter: {
               order: {
                 field: 'created_at',
@@ -130,7 +130,7 @@ export default function useCrudLeads() {
           //get field type
           const fieldType = field.dynamicField ? (field.dynamicField.type || 'input') : 'input'
           //get field value
-          const fieldValue = leadValues[field.name] || '-'
+          const fieldValue = leadValues[field.systemName || field.label.toLowerCase().replace(/\s+/g, '_')];
           //Get field file
           const fieldFile = (fieldType != 'media') ? null : files.find(item => fieldValue.includes(item.zone))
           //Add extra data to field

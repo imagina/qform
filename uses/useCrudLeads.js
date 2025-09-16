@@ -132,7 +132,7 @@ export default function useCrudLeads() {
           //get field value
           const fieldValue = leadValues[field.systemName || field.label.toLowerCase().replace(/\s+/g, '_')];
           //Get field file
-          const fieldFile = (fieldType != 'media') ? null : files.find(item => fieldValue.includes(item.zone))
+          const fieldFile = (fieldType != 'media') ? null : files.file
           //Add extra data to field
           response.push({
             ...field,

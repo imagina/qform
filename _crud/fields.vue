@@ -124,7 +124,7 @@ export default {
           fieldOptions: {
             value: [],
             type: 'select',
-            isTranslatable: true,
+            isFakeField: true,
             props: {
               label: this.$trp('isite.cms.form.option'),
               useInput: true,

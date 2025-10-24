@@ -16,7 +16,7 @@ export default {
         entityName: config("main.qform.entityNames.field"),
         apiRoute: 'apiRoutes.qform.fields',
         permission: 'iform.fields',
-        extraFormFields: 'iforms.crud-fields.fields',
+        extraFormFields: 'iform.crud-fields.fields',
         create: {
           title: this.$tr('iforms.cms.newField'),
         },
@@ -133,7 +133,7 @@ export default {
               hideDropdownIcon: true,
               inputDebounce: "0",
               newValueMode: "add-unique",
-              vIf: ([5, 6, 8].indexOf(parseInt(this.crudInfo.type || 0)) != -1) ? true : false,
+              vIf: ([5, 6, 8].indexOf(parseInt(this.crudInfo.typeId || 0)) != -1) ? true : false,
               hint: this.$tr('iforms.cms.message.helpToOptionsField')
             }
           },

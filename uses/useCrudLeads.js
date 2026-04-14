@@ -124,27 +124,35 @@ export default function useCrudLeads() {
 
       if (modal.value.lead) {
         const leadValues = clone(modal.value.lead.values || [])
-        const files = clone(modal.value.lead.files)
+        const files = clone(modal.value.lead.files || {})
+        const filesList = Array.isArray(files) ? files : Object.values(files).filter(Boolean)
         //Merge values
         clone(modal.value.lead.form.fields).forEach(field => {
           //get field type
           const fieldType = field.dynamicField ? (field.dynamicField.type || 'input') : 'input'
+          const fieldKey = field.systemName || field.label.toLowerCase().replace(/\s+/g, '_')
           //get field value
-          const fieldValue = leadValues[field.systemName || field.label.toLowerCase().replace(/\s+/g, '_')];
+          const fieldValue = leadValues[fieldKey]
           //Get field file
-          const fieldFile = (fieldType != 'media') ? null : files.file
+          const fieldFile = (fieldType != 'media')
+            ? null
+            : filesList.find(item => ((item?.pivot?.zone || item?.zone) === fieldKey)) || files.file || null
           //Add extra data to field
+
           response.push({
             ...field,
             label: field.label,
-            value: (fieldType != 'media') ? fieldValue : [{
-              id: crudId,
+            value: (fieldType != 'media') ? fieldValue : (fieldFile || fieldValue) ? [{
+              id: fieldFile?.id || crudId,
               ...fieldFile,
-              path: fieldValue,
-              url: fieldValue,
-              mediumThumb: fieldValue,
-              filename: field.label
-            }],
+              path: fieldFile?.path || fieldValue,
+              url: fieldFile?.url || fieldValue,
+              thumbnails: fieldFile?.thumbnails || { mediumThumb: fieldFile?.url || fieldValue },
+              mediumThumb: fieldFile?.mediumThumb || fieldFile?.url || fieldValue,
+              filename: fieldFile?.filename || field.label,
+              extension: fieldFile?.extension || String(fieldValue || '').split('?')[0].split('#')[0].split('.').pop()?.toLowerCase(),
+              isImage: fieldFile?.isImage ?? false
+            }] : [],
             fieldType: fieldType
           })
         })
